@@ -10,6 +10,11 @@
                         <%= user_field.text_field :email, autocomplete: "off", class: "form-control" %>
                         <span class="text-danger"><%= @admin.user.errors.messages[:email].first if @admin.errors.any? %></span>
                     </div>
+                    <div class="form-group"> 
+                        <%= user_field.label :username, 'Username:' %>
+                        <%= user_field.text_field :username, autocomplete: "off", class: "form-control" %>
+                        <span class="text-danger"><%= @admin.user.errors.messages[:username].first if @admin.errors.any? %></span>
+                    </div>
                     <div class="form-group">
                         <%= user_field.label :password, 'Senha:' %>
                         <%= user_field.password_field :password, class: "form-control" %>
