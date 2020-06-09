@@ -1,0 +1,7 @@
+<% if current_user.admin? %>
+<%= render file: 'admins/home' %>
+<% elsif current_user.reviewer? %>
+<%= render file: 'reviewers/home' %>
+<% elsif current_user.student? %>
+<%= render file: 'students/home' %>
+<% end %>

@@ -1,0 +1,147 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-3 text-dark shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Redações Recebidas</h5>
+                <h3 class="card-text"><%= @essays.length %></h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3 text-dark shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Redações Corrigidas</h5>
+                <h3 class="card-text"><%= @corrections.length %></h3>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-3 text-dark shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Alunos Ativos</h5>
+                <h3 class="card-text"><%= @students.length %></h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3 text-dark shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Categorias dos Alunos</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="card-text"><strong class="text-primary">ENEM:</strong> <%= @enem.length %></h3>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 class="card-text"><strong class="text-primary">IFRN:</strong> <%= @ifrn.length %></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-3 text-dark shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Correções Ativas</h5>
+                <div class="table-responsive-md">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tema</th>
+                                <th>Autor</th>
+                                <th>Data de Início</th>
+                                <th>Iniciada por</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% @correcting.each do |correction| %>
+                            <tr>
+                                <td class="align-middle"><%= correction.essay.theme.description %></td>
+                                <td class="align-middle"><%= correction.student.user.username %></td>
+                                <td class="align-middle"><%= correction.start_date.strftime("%d/%m/%Y") %></td>
+                                <% if correction.admin %>
+                                <td class="align-middle"><%= correction.admin.user.username %></td>
+                                <% else %>
+                                <td class="align-middle"><%= correction.reviewer.user.username %></td>
+                                <% end %>
+                                <td class="align-middle">
+                                    <%= link_to start_correction_path(correction.hash_id), class: "btn btn-link" do %>
+                                    <span data-toggle="tooltip" data-placement="top" title="Continuar Correção">
+                                        <%= fa_icon 'pencil-alt' %>
+                                    </span>
+                                    <% end %>
+                                </td>
+                            </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-3 text-dark shadow-sm">
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-md-6 d-flex">
+                        <h5 class="card-title mb-0 align-self-center">Correções Finalizadas</h5>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-end">
+                        <%= link_to new_correction_path, class: "btn btn-link card-link" do %>
+                        <span>Nova Correção</span>
+                        <% end %>
+                    </div>
+                </div>
+                <div class="table-responsive-md">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tema</th>
+                                <th>Autor</th>
+                                <th>Data de Início</th>
+                                <th>Data de Conclusão</th>
+                                <th>Corrigida por</th>
+                                <th>Pontuação</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% @corrected.each do |correction| %>
+                            <tr>
+                                <td class="align-middle"><%= correction.essay.theme.description %></td>
+                                <td class="align-middle"><%= correction.student.user.username %></td>
+                                <td class="align-middle"><%= correction.start_date.strftime("%d/%m/%Y") %></td>
+                                <td class="align-middle"><%= correction.end_date.strftime("%d/%m/%Y") %></td>
+                                <% if correction.admin %>
+                                <td class="align-middle"><%= correction.admin.user.username %></td>
+                                <% else %>
+                                <td class="align-middle"><%= correction.reviewer.user.username %></td>
+                                <% end %>
+                                <td class="align-middle"><%= correction.final_score %></td>
+                                <td class="align-middle">
+                                    <% if correction.valid_essay %>
+                                    <%= link_to show_correction_path(correction.hash_id), class: "btn btn-link" do %>
+                                    <span data-toggle="tooltip" data-placement="top" title="Detalhes">
+                                        <%= fa_icon 'eye' %>
+                                    </span>
+                                    <% end %>
+                                    <% else %>
+                                    <small class="text-danger">Inválida!</small>
+                                    <% end %>
+                                </td>
+                            </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

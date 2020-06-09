@@ -1,0 +1,45 @@
+<%= form_with(model: @competence, local: true, class: 'd-flex flex-column') do |f| %>
+
+<%= f.hidden_field :category_id %>
+
+<div class="form-group">
+    <%= f.label :description, "Competência:" %>
+    <%= f.text_field :description, class: "form-control", autocomplete: "off" %>
+    <span class="text-danger"><%= @competence.errors.messages[:description].first if @competence.errors.any? %></span>
+</div>
+
+<div class="form-group">
+    <%= f.label :max_penalty, "Penalidade máxima:" %>
+    <%= f.number_field :max_penalty, min:0, max: @competence.category.max_score, placeholder: 0, class: "form-control", autocomplete: "off" %>
+    <span class="text-danger"><%= @competence.errors.messages[:max_penalty].first if @competence.errors.any? %></span>
+</div>
+
+<div class="form-group">
+    <%= f.label :penalty_division, "Divisão da penalidade:" %>
+    <%= f.number_field :penalty_division, min:0, placeholder: 0, class: "form-control", autocomplete: "off" %>
+    <span class="text-danger"><%= @competence.errors.messages[:penalty_divison].first if @competence.errors.any? %></span>
+</div>
+
+<div class="form-group align-self-center">
+    <%= f.button class: "btn btn-primary mr-2" do %>
+
+    <span>Salvar</span>
+    <% end %>
+
+    <%= link_to category_path(@competence.category_id), class: "btn btn-primary mr-2" do %>
+
+    <span>Cancelar</span>
+    <% end %>
+</div>
+
+<% end %>
+
+<% if @competence.errors.any? %>
+<script>
+
+    $(".form-group input, .form-group select").each(function () {
+        $(this).removeClass("border-dark").addClass("border-danger");
+    })
+
+</script>
+<% end %>

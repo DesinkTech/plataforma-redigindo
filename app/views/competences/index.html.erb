@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card mb-3 text-dark shadow-sm">
+      <div class="card-body">
+        <div class="row mb-2">
+          <div class="col-md-6 d-flex">
+            <h5 class="card-title mb-0 align-self-center">Competências</h5>
+          </div>
+          <div class="col-md-6 d-flex justify-content-end">
+            <%= link_to new_competence_path, class: "btn btn-link" do %>
+            <span data-toggle="tooltip" data-placement="top" title="Nova Competência">
+              <%= fa_icon "plus" %>
+            </span>
+            <% end %>
+          </div>
+        </div>
+        <div class="table-responsive-md">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <th style="width: 85%;">Competência</th>
+            </thead>
+            <tbody>
+              <% @competences.each do |competence| %>
+              <tr>
+                <td class="align-middle"><%= competence.description %></td>
+                <td class="align-middle">
+                  <%= link_to competence_path(competence), class: "btn btn-link" do %>
+                  <span data-toggle="tooltip" data-placement="top" title="Ver Comentários">
+                    <%= fa_icon 'eye' %>
+                  </span>
+                  <% end %>
+                  <%= link_to edit_competence_path(competence), class: "btn btn-link" do %>
+                  <span data-toggle="tooltip" data-placement="top" title="Editar">
+                    <%= fa_icon 'pencil-alt' %>
+                  </span>
+                  <% end %>
+                </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <%= will_paginate @competences, list_classes: %w(pagination justify-content-center),
+                                        next_label: "&#62;", previous_label: "&#60;"  %>
+      </div>
+    </div>
+  </div>
+</div>

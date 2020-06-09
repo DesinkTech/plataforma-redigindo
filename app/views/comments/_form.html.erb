@@ -1,0 +1,35 @@
+<%= form_with(model: @comment, local: true, class: 'd-flex flex-column') do |f| %>
+
+<%= f.hidden_field :competence_id %>
+<%# f.hidden_field :category_id %>
+
+<div class="form-group">
+    <%= f.label :description, "Comentário:" %>
+    <%= f.text_field :description, class: "form-control", autocomplete: "off" %>
+    <span class="text-danger"><%= @comment.errors.messages[:description].first if @comment.errors.any? %></span>
+
+</div>
+
+<div class="form-group align-self-center">
+    <%= f.button class: "btn btn-primary mr-2" do %>
+     
+    <span>Salvar</span>
+    <% end %>
+    
+    <%= link_to competence_path(@comment.competence.category.id,@comment.competence_id), class: "btn btn-primary mr-2" do %>
+    
+    <span>Cancelar</span>
+    <% end %>
+</div>
+
+<% end %>
+
+<% if @comment.errors.any? %>
+<script>
+
+    $(".form-group input, .form-group select").each(function () {
+        $(this).removeClass("border-dark").addClass("border-danger");
+    })
+
+</script>
+<% end %>

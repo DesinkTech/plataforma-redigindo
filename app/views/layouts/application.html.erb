@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html style="min-height: 100vh">
+
+<head>
+  <title>Plataforma Redigindo</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= favicon_link_tag asset_path('favicon.ico') %>
+  <style>
+    body {
+      background-color: #deddfa;
+    }
+
+    button:focus,
+    a:focus {
+      outline: none !important;
+    }
+
+    /*
+       * Sidebar Toggler
+       */
+
+    #sidebarToggler {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+    }
+
+    #sidebarToggler span {
+      width: 80%;
+      height: 4px;
+      margin: 0 auto;
+      display: block;
+      transition: all 0.5s cubic-bezier(0.810, -0.330, 0.345, 1.375);
+      outline: none;
+    }
+
+    #sidebarToggler span:first-of-type {
+      transform: rotate(45deg) translate(4px, 4px);
+    }
+
+    #sidebarToggler span:nth-of-type(2) {
+      opacity: 0;
+    }
+
+    #sidebarToggler span:last-of-type {
+      transform: rotate(-45deg) translate(2px, -1px);
+    }
+
+    #sidebarToggler.open span {
+      transform: none;
+      opacity: 1;
+      margin: 5px auto;
+    }
+
+    /*
+       * Sidebar
+       */
+
+    .sidebar {
+      min-width: 75px;
+      max-width: 75px;
+      height: 100vh;
+      transition: min-width 0.3s ease-in-out, max-width 0.3s ease-in-out;
+    }
+
+    .menu-open {
+      min-width: 250px;
+      max-width: 250px;
+    }
+
+    .sidebar-header {
+      justify-content: center;
+      padding: 25px 12px;
+      min-height: 95px;
+    }
+
+    .sidebar-content {
+      padding: 20px 0px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      transition: all 0.15s ease-in-out;
+    }
+
+    .menu-link {
+      padding: 15px 12px;
+      transition: all 0.15s ease-in-out;
+      text-decoration: none !important;
+      cursor: pointer;
+      overflow-x: hidden;
+    }
+
+    .menu-link:hover {
+      background-color: #162447;
+    }
+
+    .menu-link:hover .link-icon {
+      color: #0779e4 !important;
+    }
+
+    .menu-link:hover .link-label {
+      color: #e3f6f5 !important;
+    }
+
+    .link-icon {
+      font-size: 1.5em;
+      transition: all 0.15s ease-in-out;
+      width: 30px;
+    }
+
+    .link-label {
+      transition: all 0.15s ease-in-out;
+      padding-left: 20px;
+      overflow: hidden;
+      height: 24px;
+    }
+
+    .menu-expand {
+      font-size: 0.90em;
+      transition: all 150ms ease-in-out;
+    }
+
+    .expanded {
+      transform: rotate(90deg);
+      color: #0779e4 !important;
+    }
+
+    .menu-link:hover .menu-expand {
+      color: #0779e4 !important;
+    }
+
+    .submenu {
+      background-color: #162447;
+    }
+
+    .submenu-link .active {
+      color: #0779e4 !important;
+    }
+
+    .menu-link.active {
+      background-color: #162447 !important;
+    }
+
+
+    .submenu-item {
+      text-decoration: none !important;
+      padding: 10px 20px;
+      transition: all 150ms ease-in-out;
+    }
+
+    .footer-link {
+      padding: 12px;
+      cursor: pointer;
+      text-decoration: none !important;
+      border-color: #1b1b1f !important;
+      outline: none;
+    }
+
+    .footer-link:focus {
+      background-color: #10102e !important;
+    }
+
+    /*
+     * Main Area
+     */
+
+    .navbar-brand img {
+      display: block;
+      width: 71px;
+      height: 58px;
+    }
+
+    .main {
+      overflow-y: auto;
+    }
+
+    .main-content {
+      padding: 32px;
+    }
+
+    .notification-icon {
+      font-size: 1.3em;
+    }
+
+    /*
+     * Input
+     */
+
+    .inputfile {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
+    }
+
+    .inputfile+label {
+      font-size: 1.75em;
+      transition: color 150ms ease-in-out;
+      cursor: pointer;
+    }
+
+    .inputfile:focus+label,
+    .inputfile+label:hover {
+      color: #035aa6 !important;
+    }
+  </style>
+</head>
+
+<body class="d-flex" style="min-height: inherit;">
+  <nav class="sidebar d-flex flex-column bg-primary shadow-sm menu-open">
+    <div class="sidebar-header d-flex">
+      <button type="button" id="sidebarToggler" class="navbar-toggler ">
+        <span class="rounded-pill bg-white"></span>
+        <span class="rounded-pill bg-white"></span>
+        <span class="rounded-pill bg-white"></span>
+      </button>
+    </div>
+    <div class="sidebar-content flex-grow-1">
+      <ul class="list-unstyled">
+        <li>
+          <%= link_to home_path, class: "menu-link d-flex" do %>
+          <%= fa_icon "home", class: "link-icon align-self-stretch text-secondary" %>
+          <span class="link-label flex-grow-1 align-self-stretch text-secondary">Home</span>
+          <% end %>
+        </li>
+        <% if current_user.admin? %>
+        <li>
+          <a data-toggle="collapse" class="menu-link submenu-link d-flex">
+            <%= fa_icon "user-cog", class: "link-icon align-self-center text-secondary" %>
+            <span class="link-label flex-grow-1 align-self-center text-secondary">Painel Admin</span>
+            <%= fa_icon "angle-right", class: "menu-expand align-self-center text-secondary" %>
+          </a>
+          <ul class="submenu collapse list-unstyled">
+            <li>
+              <%= link_to "Alunos", students_path, class: "d-block submenu-item text-secondary" %>
+            </li>
+            <li>
+              <%= link_to "Categorias", categories_path, class: "d-block submenu-item text-secondary" %>
+            </li>
+            <li>
+              <%= link_to "Endereços", addresses_path, class: "d-block submenu-item text-secondary" %>
+            </li>
+            <li>
+              <%= link_to "Escolas", schools_path, class: "d-block submenu-item text-secondary" %>
+            </li>
+            <li>
+              <%= link_to "Temas", themes_path, class: "d-block submenu-item text-secondary" %>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <%= link_to essays_path, class: "menu-link d-flex" do %>
+          <%= fa_icon "quote-right", class: "link-icon align-self-center text-secondary" %>
+          <span class="link-label flex-grow-1 align-self-center text-secondary">Redações</span>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to corrections_path, class: "menu-link d-flex" do %>
+          <%= fa_icon "spell-check", class: "link-icon align-self-center text-secondary" %>
+          <span class="link-label flex-grow-1 align-self-center text-secondary">Correções</span>
+          <% end %>
+        </li>
+        <% elsif current_user.student? %>
+        <li>
+          <%= link_to submissions_path, class: "menu-link d-flex" do %>
+          <%= fa_icon "pencil-alt", class: "link-icon align-self-center text-secondary" %>
+          <span class="link-label flex-grow-1 align-self-center text-secondary">Submissões</span>
+          <% end %>
+        </li>
+        <li>
+          <%= link_to new_essay_path, class: "menu-link d-flex" do %>
+          <%= fa_icon "paper-plane", class: "link-icon align-self-center text-secondary" %>
+          <span class="link-label flex-grow-1 align-self-center text-secondary">Enviar Redação</span>
+          <% end %>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="d-flex flex-column bg-dark">
+      <% if current_user.student? %>
+      <div>
+        <div class='footer-link border-bottom text-white' style="cursor: default">
+          <%= fa_icon 'wallet', class: 'text-light link-icon align-self-center' %>
+          <span class="link-label text-light flex-grow-1 align-self-center">
+            <%= current_user.student.credits %>
+          </span>
+        </div>
+        <%= link_to edit_student_path(current_user.username.delete(' ').downcase), class: "footer-link d-flex border-bottom" do %>
+        <%= fa_icon "id-badge", class: "text-light link-icon align-self-center" %>
+        <span class="link-label text-light flex-grow-1 align-self-center"><%= current_user.username %></span>
+        <% end %>
+      </div>
+      <% else %>
+      <div>
+        <%= link_to edit_admin_path(current_user.username.delete(' ').downcase), class: "footer-link d-flex border-bottom" do %>
+        <%= fa_icon "id-badge", class: "text-light link-icon align-self-center" %>
+        <span class="link-label text-light flex-grow-1 align-self-center"><%= current_user.username %></span>
+        <% end %>
+      </div>
+      <% end %>
+      <%= link_to logout_path, method: 'delete', class: "footer-link d-flex border-bottom" do %>
+      <%= fa_icon 'sign-out-alt', class: "text-light link-icon align-self-center" %>
+      <span class="link-label text-light flex-grow-1 align-self-center">Logout</span>
+      <% end %>
+    </div>
+  </nav>
+  <main class="flex-fill vh-100 main">
+    <nav class="navbar bg-light justify-content-center shadow-sm v-80">
+      <div class="navbar-brand">
+        <%= link_to (image_tag "logo_redigindo_original_black.png", class: "img-fluid", alt: "Logo Redigindo"), home_path %>
+      </div>
+    </nav>
+    <section class="main-content container-fluid">
+      <% if success || error || info || warning %>
+      <div class="toast shadow-sm" style="position: fixed; max-width: 75% ;z-index: 999; top: 32px; right: 32px;"
+        role="alert" aria-live="assertive" aria-atomic="true" data-delay="2500">
+        <% if success %>
+        <div class="toast-body bg-success d-flex">
+          <div class="align-self-center">
+            <%= fa_icon 'check-circle', class: "notification-icon mr-2 text-light " %>
+          </div>
+          <strong class="mr-auto text-light"><%= success %></strong>
+          <div class="align-self-center">
+            <button type="button" class="ml-3 mb-1 close" data-dismiss="toast" aria-label="close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        <% elsif error %>
+        <div class="toast-body bg-danger d-flex">
+          <div class="align-self-center">
+            <%= fa_icon 'times-circle', class: "notification-icon mr-2 text-light " %>
+          </div>
+          <strong class="mr-auto text-light"><%= error %></strong>
+          <div class="align-self-center">
+            <button type="button" class="ml-3 mb-1 close" data-dismiss="toast" aria-label="close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        <% elsif info %>
+        <div class="toast-body bg-info d-flex">
+          <div class="align-self-center">
+            <%= fa_icon 'info-circle', class: "notification-icon mr-2 text-light " %>
+          </div>
+          <strong class="mr-auto text-light"><%= info %></strong>
+          <div class="align-self-center">
+            <button type="button" class="ml-3 mb-1 close" data-dismiss="toast" aria-label="close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        <% elsif warning %>
+        <div class="toast-body bg-warning d-flex">
+          <div class="align-self-center">
+            <%= fa_icon 'exclamation-circle', class: "notification-icon mr-2 text-light " %>
+          </div>
+          <strong class="mr-auto text-light align-self-center"><%= warning %></strong>
+          <div class="align-self-center">
+            <button type="button" class="ml-3 mb-1 close" data-dismiss="toast" aria-label="close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        <% end %>
+      </div>
+      <% end %>
+      <%= yield %>
+    </section>
+  </main>
+  <script>
+    $(document).ready(function () {
+      let ToggleSubMenu = function () {
+        $('.collapse').collapse('toggle');
+        $('.submenu-link').toggleClass('active');
+        $('.submenu-link').children().toggleClass('active');
+        $('.submenu-link').children('.menu-expand').toggleClass('expanded');
+      }
+
+      let ToggleMenu = function () {
+        $('#sidebarToggler').toggleClass('open');
+        $('.sidebar').toggleClass('menu-open');
+
+        if ($('.submenu-link').hasClass('active')) {
+          ToggleSubMenu();
+        }
+
+        $('.sidebar').one("webkitTransitionend otransitionend oTransitionend msTransitionend transitionend", function () {
+          $('.link-label').toggleClass('d-none');
+          $('.menu-expand').toggleClass('d-none');
+          $('.footer-link').toggleClass('d-none');
+        })
+
+        $('.menu-link').toggleClass('justify-content-center');
+        $('.footer-link').toggleClass('justify-content-center');
+      }
+
+
+      $('.toast').toast('show');
+
+      $('#sidebarToggler').on('click', function () {
+        ToggleMenu();
+      });
+
+      $(".submenu-link").on('click', function () {
+        if (!$('.sidebar').hasClass('menu-open')) {
+          $('#sidebarToggler').trigger('click');
+        }
+
+        ToggleSubMenu();
+      })
+
+      $('[data-toggle="tooltip"]').tooltip()
+
+    })
+  </script>
+</body>
+
+</html>

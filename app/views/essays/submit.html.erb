@@ -1,0 +1,70 @@
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card justify-content-center shadow-sm mb-4">
+            <h5 class="card-header">Faça download do nosso modelo de redação </h5>
+            <div class="card-body align-self-center">
+                <%= link_to download_essay_model_path, class: "btn btn-link" do %>
+                <span data-toggle="tooltip" data-placement="bottom" title="Download">
+                    <%= fa_icon "file-download 3x" %>
+                </span>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <%= form_with(model: @essay, local: true, class: "card ", multipart: true) do |f| %>
+        <div class="card-body">
+            <div class="d-flex flex-column bg-light"
+                style="overflow: hidden; padding: 37px; border: 8px dashed #dee2e6">
+
+                <div class="align-self-center mb-4">
+                    <%= fa_icon "upload 7x", style: "color: #dee2e6"  %>
+                </div>
+
+                <div>
+                    <%= hidden_field_tag :theme_hash_id, params[:theme_hash_id] %>
+                </div>
+
+
+                <div class="form-group align-self-center mb-4">
+                    <%= f.file_field :file, accept: 'image/png,image/jpeg,image/jpg', class: "inputfile" %>
+                    <%= f.label :file, "Selecione o arquivo...", class: "text-dark" %>
+                </div>
+
+                <div class="form-group align-self-center mb-4">
+                    <%= f.submit "Enviar", class: "btn btn-primary", style: "font-weight: bold;" %>
+                </div>
+            </div>
+        </div>
+        <% end %>
+    </div>
+</div>
+
+<script>
+$(document).ready( function (){
+    $('.inputfile').each( function(){
+        
+        var input = $(this);
+        var label = input.next('label');
+        var labelVal = label.html();
+        
+        input.on('change', function (e) {
+            var fileName = '';
+
+            fileName = e.target.value.split('\\').pop();
+
+            if(fileName)
+                label.html(fileName);
+            else
+                label.html(labelVal);
+        })
+
+        input.on('focus', function () { input.addClass('has-focus'); })
+        input.on('blur', function () { input.addClass('has-focus'); })
+    })   
+})
+</script>

@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-3 shadow-sm text-dark">
+            <div class="card-body">
+                <h5 class="card-title">Novo Admin</h5>
+                <%= form_with(model: @admin, url: admin_new_path, class: "d-flex flex-column", local: true) do |f| %>
+                    <%= f.fields_for :user do |user_field| %>
+                    <div class="form-group"> 
+                        <%= user_field.label :email, 'Email:' %>
+                        <%= user_field.text_field :email, autocomplete: "off", class: "form-control" %>
+                        <span class="text-danger"><%= @admin.user.errors.messages[:email].first if @admin.errors.any? %></span>
+                    </div>
+                    <div class="form-group">
+                        <%= user_field.label :password, 'Senha:' %>
+                        <%= user_field.password_field :password, class: "form-control" %>
+                        <span class="text-danger"><%= @admin.user.errors.messages[:password].first if @admin.errors.any? %></span>
+                    </div>
+                    <div class="form-group">
+                        <%= user_field.label :password_confirmation, 'Confirmar senha:' %>
+                        <%= user_field.password_field :password_confirmation, class: "form-control" %>
+                        <span class="text-danger"><%= @admin.user.errors.messages[:password_confirmation].first if @admin.errors.any? %></span>
+                    </div>
+                    <div class="form-group">
+                        <%= user_field.label :name, 'Name' %>
+                        <%= user_field.text_field :name, autocomplete: "off", class: "form-control" %>
+                        <span class="text-danger"><%= @admin.user.errors.messages[:name].first if @admin.errors.any? %></span>
+                    </div>
+                    <div class="form-group">
+                        <%= user_field.label :birth_date, 'Birth Date' %>
+                        <%= user_field.date_field :birth_date, autocomplete: "off", class: "form-control" %>
+                        <span class="text-danger"><%= @admin.user.errors.messages[:birth_date].first if @admin.errors.any? %></span>
+                    </div>
+                    <div class="form-group">
+                        <%= user_field.label :cpf, 'CPF' %>
+                        <%= user_field.text_field :cpf, autocomplete: "off", class: "form-control" %>
+                        <span class="text-danger"><%= @admin.user.errors.messages[:cpf].first if @admin.errors.any? %></span>
+                    </div>
+                    <div class="form-group">
+                        <%= user_field.label :rg, 'RG' %>
+                        <%= user_field.text_field :rg, autocomplete: "off", class: "form-control" %>
+                        <span class="text-danger"><%= @admin.user.errors.messages[:rg].first if @admin.errors.any? %></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <%= user_field.label :address_id, 'City' %>
+                        <%= user_field.select 'address_id', @address_options ,{ include_blank: 'Selecione a cidade...'}, class: "form-control custom-select" %>
+                        <span class="text-danger"><%= @admin.user.errors.messages[:address].first if @admin.errors.any? %></span>
+                    </div>
+                    <% end %>
+
+                    <div class="form-group align-self-center">
+                        <%= f.submit class: "btn btn-primary mr-2" do%>
+                        <span>Cadastrar</span>
+                        <% end %>
+
+                        <%= link_to home_path, class: "btn btn-primary mr-2" do %>
+                        <span>Cancelar</span>
+                        <% end %>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% if @admin.errors.any? %>
+<script>
+
+    $(".form-group input, .form-group select").each(function () {
+        $(this).removeClass("border-dark").addClass("border-danger");
+    })
+
+</script>
+<% end %>

@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-md-7 d-flex">
+        <div class="card mb-3 text-dark shadow-sm flex-fill">
+            <div class="card-body">
+                <a href="#" data-toggle="modal" data-target="#essayModal">
+                    <%= image_tag @essay.file, class: "img-fluid" if @essay.file.attached?%>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="essayModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="essayModal" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Redação enviada</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body align-self-center">
+                    <%= image_tag @essay.file.variant(resize: '1123x1587') if @essay.file.attached? %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="row">
+            <div class="card mb-3 text-dark shadow-sm flex-fill">
+                <div class="card-body">
+                    <h5 class="card-title">Redação:</h5>
+                    <h6><strong>Tema: </strong><%= @essay.theme.description %></h6>
+                    <h6><strong>Enviada por: </strong><%= @essay.student.user.username %></h6>
+                </div>
+            </div>
+
+            <div class="card mb-3 text-dark shadow-sm flex-fill">
+                <div class="card-body">
+                    <h5 class="card-title">Redação Válida?</h5>
+                    <%= form_with(model: @correction, url: create_correction_path(params[:essay_hash_id]) , local: true) do |f| %>
+
+                    <div class="form-group">
+                        <div class="custom-control custom-radio">
+                            <%= f.radio_button :valid_essay, true, class: "custom-control-input"  %>
+                            <%= f.label :valid_essay, "Sim", value: "true", class: "custom-control-label" %>
+                        </div>
+
+                        <div class="custom-control custom-radio">
+                            <%= f.radio_button :valid_essay, false, class: "custom-control-input" %>
+                            <%= f.label :valid_essay, "Não", value: "false", class: "custom-control-label" %>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <%= f.submit "Validar", class: "btn btn-primary" %>
+                        <%= link_to  "Cancelar", corrections_path, class: "btn btn-primary" %>
+                    </div>
+
+                    <% end %>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<%= form_with(model: @address, local: true, class: 'd-flex flex-column') do |f| %>
+
+<div class="form-group">
+    <%= f.label :city, "Cidade:" %>
+    <%= f.text_field :city, class: "form-control", autocomplete: "off" %>
+    <span class="text-danger"><%= @address.errors.messages[:city].first if @address.errors.any? %></span>
+</div>
+<div class="form-group">
+    <%= f.label :state, "UF:" %>
+    <%= f.text_field :state, class: "form-control", autocomplete: "off" %>
+    <span class="text-danger"><%= @address.errors.messages[:state].first if @address.errors.any? %></span>
+</div>
+<div class="form-group align-self-center">
+    <%= f.button class: "btn btn-primary mr-2" do %>
+    <span>Salvar</span>
+    <% end %>
+
+    <%= link_to addresses_path, class: "btn btn-primary mr-2" do %>
+    <span>Cancelar</span>
+    <% end %>
+</div>
+
+<% end %>
+
+<% if @address.errors.any? %>
+<script>
+
+    $(".form-group input, .form-group select").each(function () {
+        $(this).removeClass("border-dark").addClass("border-danger");
+    })
+
+</script>
+<% end %>

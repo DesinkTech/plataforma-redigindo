@@ -1,0 +1,3 @@
+Olá <%= @user.username %>,
+Bem vindo à Plataforma Redigindo. Clique no link abaixo para verificar sua conta:
+<%= edit_user_verification_url(@user.verification_token, email: @user.email) %>

@@ -1,0 +1,10 @@
+{
+  "name": "Redigindo",
+  "private": true,
+  "dependencies": {},
+  "version": "0.1.0",
+  "description": "\"Plataforma para correção de redações online\"",
+  "main": "index.js",
+  "author": "AlfredoHAC <alfredohac@gmail.com>",
+  "license": "MIT"
+}

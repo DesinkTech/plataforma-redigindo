@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+
+<h1>Profile</h1>
+
+<div>
+    <strong>Name: </strong>
+    <%= @reviewer.user.name %>
+</div>
+
+<div>
+    <strong>Email: </strong>
+    <%= @reviewer.user.email %>
+</div>
+
+<div>
+    <strong>Birth Date: </strong>
+    <%= @reviewer.user.birth_date %>
+</div>
+
+<div>
+    <strong>CPF: </strong>
+    <%= @reviewer.user.cpf %>
+</div>
+
+<div>
+    <strong>RG: </strong>
+    <%= @reviewer.user.rg %>
+</div>
+
+<div>
+    <strong>City: </strong>
+    <%= @reviewer.user.address.city %>
+</div>
+
+
+<%= link_to 'Edit Profile', reviewer_edit_path(current_user.name.delete(' '))%>
+<%= link_to 'Back', home_path %>

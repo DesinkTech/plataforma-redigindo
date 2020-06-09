@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html style="min-height: 100vh">
+  <head>
+    <title>Plataforma Redigindo</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= favicon_link_tag asset_path('favicon.ico') %>
+    <style>
+      body {
+        background-color: #deddfa;
+      }
+      
+      button:focus,
+      a:focus {
+        outline: none !important;
+      }
+      
+      /*
+       * Main Area
+       */
+      
+      .navbar-brand img {
+        display: block;
+        width: 71px;
+        height: 58px;
+      }
+      
+      .main {
+        overflow-y: auto;
+      }
+      
+      .main-content {
+        padding: 32px;
+      }
+      
+      .notification-icon {
+        font-size: 1.3em;
+      }
+    </style>
+  </head>
+  <body class="d-flex" style="min-height: inherit;">
+    <main class="flex-fill vh-100 main">
+      <nav class="navbar bg-light justify-content-center shadow-sm v-80">
+        <div class="navbar-brand">
+          <%= link_to (image_tag "logo_redigindo_original_black.png", class: "img-fluid", alt: "Logo Redigindo"), home_path %>
+        </div>
+      </nav>
+      <section class="main-content container-fluid">
+        <% if success || error || info || warning %>
+          <div class="toast shadow-sm" style="position: fixed; max-width: 90% ;z-index: 999; top: 32px; right: 32px;"
+        role="alert" aria-live="assertive" aria-atomic="true" data-delay="2500">
+            <% if success %>
+              <div class="toast-body bg-success d-flex">
+                <div class="align-self-center">
+                  <%= fa_icon 'check-circle', class: "notification-icon mr-2 text-light " %>
+                </div>
+                <strong class="mr-auto text-light"><%= success %></strong>
+                <div class="align-self-center">
+                  <button type="button" class="ml-3 mb-1 close" data-dismiss="toast" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>
+            <% elsif error %>
+              <div class="toast-body bg-danger d-flex">
+                <div class="align-self-center">
+                  <%= fa_icon 'times-circle', class: "notification-icon mr-2 text-light " %>
+                </div>
+                <strong class="mr-auto text-light"><%= error %></strong>
+                <div class="align-self-center">
+                  <button type="button" class="ml-3 mb-1 close" data-dismiss="toast" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>
+            <% elsif info %>
+              <div class="toast-body bg-info d-flex">
+                <div class="align-self-center">
+                  <%= fa_icon 'info-circle', class: "notification-icon mr-2 text-light " %>
+                </div>
+                <strong class="mr-auto text-light"><%= info %></strong>
+                <div class="align-self-center">
+                  <button type="button" class="ml-3 mb-1 close" data-dismiss="toast" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>
+            <% elsif warning %>
+              <div class="toast-body bg-warning d-flex">
+                <div class="align-self-center">
+                  <%= fa_icon 'exclamation-circle', class: "notification-icon mr-2 text-light " %>
+                </div>
+                <strong class="mr-auto text-light align-self-center"><%= warning %></strong>
+                <div class="align-self-center">
+                  <button type="button" class="ml-3 mb-1 close" data-dismiss="toast" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+        <%= yield %>
+      </section>
+    </main>
+    <script>
+      $(document).ready(function () {
+        let ToggleSubMenu = function () {
+          $('.collapse').collapse('toggle');
+          $('.submenu-link').toggleClass('active');
+          $('.submenu-link').children().toggleClass('active');
+          $('.submenu-link').children('.menu-expand').toggleClass('expanded');
+        }
+      
+        let ToggleMenu = function () {
+          $('#sidebarToggler').toggleClass('open');
+          $('.sidebar').toggleClass('menu-open');
+      
+          if ($('.submenu-link').hasClass('active')) {
+            ToggleSubMenu();
+          }
+      
+          $('.sidebar').one("webkitTransitionend otransitionend oTransitionend msTransitionend transitionend", function () {
+            $('.link-label').toggleClass('d-none');
+            $('.menu-expand').toggleClass('d-none');
+            $('.footer-link').toggleClass('d-none');
+          })
+      
+          $('.menu-link').toggleClass('justify-content-center');
+          $('.footer-link').toggleClass('justify-content-center');
+        }
+      
+      
+        $('.toast').toast('show');
+      
+        $('#sidebarToggler').on('click', function () {
+          ToggleMenu();
+        });
+      
+        $(".submenu-link").on('click', function () {
+          if (!$('.sidebar').hasClass('menu-open')) {
+            $('#sidebarToggler').trigger('click');
+          }
+      
+          ToggleSubMenu();
+        })
+      
+      
+      })
+    </script>
+  </body>
+</html>

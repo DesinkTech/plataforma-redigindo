@@ -1,0 +1,120 @@
+<div class="card-header bg-white align-self-center">
+    <h3 class="card-title">Criar conta</h3>
+</div>
+
+
+<div class="align-self-center flex-fill" style="width: 100%; padding: 15px 8px">
+    <%= form_for @student, url: signup_path, html: 
+    { class: "d-flex flex-column justify-content-around align-items-center",
+      style: "height: 100%" } do |f| %>
+
+    <%= f.fields_for :user do |user_field| %>
+    <div class="field-div d-flex flex-column ">
+        <%= user_field.label :email, 'Email', class: "input-label text-dark" %>
+        <div class="input-div border-bottom border-dark d-flex">
+            <%= user_field.text_field :email, placeholder: "Insira seu email", class: "border-0 flex-fill align-self-stretch", autocomplete: "off" %>
+        </div>
+        <span class="text-danger"><%= @student.user.errors.messages[:email].first if @student.errors.any? %></span>
+    </div>
+
+    <div class="field-div d-flex flex-column ">
+        <%= user_field.label :username, 'Username', class: "input-label text-dark" %>
+        <div class="input-div border-bottom border-dark d-flex">
+            <%= user_field.text_field :username, placeholder: "Insira seu username", class: "border-0 flex-fill align-self-stretch", autocomplete: "off" %>
+        </div>
+        <span class="text-danger"><%= @student.user.errors.messages[:username].first if @student.errors.any? %></span>
+    </div>
+
+    <div class="field-div d-flex flex-column">
+        <%= user_field.label :password, 'Senha', class: "input-label text-dark" %>
+        <div class="input-div border-bottom border-dark d-flex">
+            <%= user_field.password_field :password, placeholder: "Insira sua Senha", class: "border-0 flex-fill align-self-stretch"%>
+        </div>
+        <span class="text-danger"><%= @student.user.errors.messages[:password].first if @student.errors.any? %></span>
+    </div>
+    <div class="field-div d-flex flex-column">
+        <%= user_field.label :password_confirmation, 'Confirmar Senha', class: "input-label text-dark" %>
+        <div class="input-div border-bottom border-dark d-flex">
+            <%= user_field.password_field :password_confirmation, placeholder: "Confirme sua senha", class: "border-0 flex-fill align-self-stretch" %>
+        </div>
+        <span
+            class="text-danger"><%= @student.user.errors.messages[:password_confirmation].first if @student.errors.any? %></span>
+    </div>
+    <div class="field-div d-flex flex-column">
+        <%= user_field.label :name, 'Nome', class: "input-label text-dark" %>
+        <div class="input-div border-bottom border-dark d-flex">
+            <%= user_field.text_field :name, placeholder: "Insira seu nome", class: "border-0 flex-fill align-self-stretch", autocomplete: "off" %>
+        </div>
+        <span class="text-danger"><%= @student.user.errors.messages[:name].first if @student.errors.any? %></span>
+    </div>
+    <div class="field-div d-flex flex-column">
+        <%= user_field.label :birth_date, 'Data de Nascimento', class: "input-label text-dark" %>
+        <div class="input-div border-bottom border-dark d-flex">
+            <%= user_field.date_field :birth_date, placeholder: "Insira sua data de nascimento", class: "border-0 flex-fill align-self-stretch", autocomplete: "off" %>
+        </div>
+        <span class="text-danger"><%= @student.user.errors.messages[:birth_date].first if @student.errors.any? %></span>
+    </div>
+    <div class="field-div d-flex flex-column">
+        <%= user_field.label :cpf, 'CPF', class: "input-label text-dark" %>
+        <div class="input-div border-bottom border-dark d-flex">
+            <%= user_field.text_field :cpf, placeholder: "Insira seu CPF", class: "border-0 flex-fill align-self-stretch", autocomplete: "off" %>
+        </div>
+        <span class="text-danger"><%= @student.user.errors.messages[:cpf].first if @student.errors.any? %></span>
+    </div>
+    <div class="field-div d-flex flex-column">
+        <%= user_field.label :rg, 'RG', class: "input-label text-dark"  %>
+        <div class="input-div border-bottom border-dark d-flex">
+            <%= user_field.text_field :rg, placeholder: "Insira seu RG", class: "border-0 flex-fill align-self-stretch", autocomplete: "off" %>
+        </div>
+        <span class="text-danger"><%= @student.user.errors.messages[:rg].first if @student.errors.any? %></span>
+    </div>
+
+    <div class="field-div d-flex flex-column">
+        <%= user_field.label :address_id, 'Cidade', class: "input-label text-dark" %>
+        <div class="input-div border-bottom border-dark d-flex">
+            <%= user_field.select 'address_id', @address_options ,{ include_blank: 'Selecione sua cidade...'},
+            class: "custom-select border-0 flex-fill align-self-stretch",
+            style: "box-shadow: none" %>
+        </div>
+        <span class="text-danger"><%= @student.user.errors.messages[:address].first if @student.errors.any? %></span>
+    </div>
+    <% end %>
+
+    <div class="field-div d-flex flex-column">
+        <%= f.label :school_id, 'Escola', class: "input-label text-dark"  %>
+        <div class="input-div border-bottom border-dark d-flex">
+            <%= f.select 'school_id', @school_options ,{ include_blank: 'Selecione sua escola...'},
+            class: "custom-select border-0 flex-fill align-self-stretch",
+            style: "box-shadow: none" %>
+        </div>
+        <span class="text-danger"><%= @student.errors.messages[:school].first if @student.errors.any? %></span>
+    </div>
+
+    <div class="field-div d-flex flex-column">
+        <%= f.label :category_id, 'Categoria', class: "input-label text-dark"  %>
+        <div class="input-div border-bottom border-dark d-flex">
+            <%= f.select 'category_id', @category_options ,{ include_blank: 'Selecione sua categoria...'},
+            class: "custom-select border-0 flex-fill align-self-stretch",
+            style: "box-shadow: none" %>
+        </div>
+        <span class="text-danger"><%= @student.errors.messages[:category].first if @student.errors.any? %></span>
+    </div>
+
+    <div class="submit-div" style="padding: 20px">
+        <%= f.submit 'Criar conta', class: "btn btn-outline-primary btn-lg btn-inicial rounded-pill
+        font-weight-bolder text-uppercase", 
+        style: "padding: 10px 50px; border-width: 2px;" %>
+    </div>
+
+    <% end %>
+</div>
+
+<% if @student.errors.any? %>
+<script>
+
+    $("#new_student .input-div").each(function () {
+        $(this).removeClass("border-dark").addClass("border-danger");
+    })
+
+</script>
+<% end %>

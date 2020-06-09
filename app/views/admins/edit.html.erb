@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-sm mb-3 text-dark">
+            <h5 class="card-header">Editar Perfil</h5>
+            <div class="card-body row">
+                <div class="col-3 border-right border-black">
+                    <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+                        <a class="nav-link active" data-toggle="pill" href="#basic" role="tab" aria-controls="basic"
+                            aria-selected="true">Conta</a>
+                        <a class="nav-link" data-toggle="pill" href="#security" role="tab" aria-controls="security"
+                            aria-selected="false">Segurança</a>
+                        <a class="nav-link" data-toggle="pill" href="#personal" role="tab" aria-controls="personal"
+                            aria-selected="false">Pessoal</a>
+                    </div>
+                </div>
+                <div class="col-9">
+                    <%= form_with model: @admin, url: edit_admin_path(@admin.user.name.delete(' ')), local: true, id: "update_form",
+                    class: 'flex-fill tab-content' do |f| %>
+                    <%= f.fields_for :user do |user_field| %>
+                    <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
+                        <div class="form-group">
+                            <%= user_field.label :email, 'Email:' %>
+                            <%= user_field.text_field :email, class: "form-control", placeholder: "Email", autocomplete: "off" %>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
+                        <div class="form-group">
+                            <%= user_field.label :password, 'Senha:' %>
+                            <%= user_field.password_field :password, class: "form-control", placeholder: "*********" %>
+                        </div>
+                        <div class="form-group">
+                            <%= user_field.label :password_confirmation, 'Confirmar Senha:' %>
+                            <%= user_field.password_field :password_confirmation, class: "form-control", placeholder: "*********" %>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="personal" role="tabpanel" aria-labelledby="personal-tab">
+                        <div class="form-group">
+                            <%= user_field.label :name, 'Nome:' %>
+                            <%= user_field.text_field :name, class: "form-control", placeholder: "Name", autocomplete: "off" %>
+                        </div>
+                        <div class="form-group">
+                            <%= user_field.label :birth_date, 'Data de Nascimento:' %>
+                            <%= user_field.date_field :birth_date, class: "form-control", placeholder: "Birth Date", autocomplete: "off" %>
+                        </div>
+                        <div class="form-group">
+                            <%= user_field.label :cpf, 'CPF:' %>
+                            <%= user_field.text_field :cpf, class: "form-control", placeholder: "CPF", autocomplete: "off" %>
+                        </div>
+                        <div class="form-group">
+                            <%= user_field.label :rg, 'RG:' %>
+                            <%= user_field.text_field :rg, class: "form-control", placeholder: "RG", autocomplete: "off" %>
+                        </div>
+                        <div class="form-group">
+                            <%= user_field.label :address_id, 'Cidade:' %>
+                            <%= user_field.select 'address_id', @address_options ,{ include_blank: 'Selecione a cidade...'},
+                            class: "form-control custom-select" %>
+                        </div>
+                    </div>
+                    <% end %>
+
+                    <% end %>
+                </div>
+                <div class="col-12 d-flex justify-content-center mt-3">
+                    <input type="submit" value="Salvar" form="update_form" name="commit"
+                        class="btn btn-outline-primary" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

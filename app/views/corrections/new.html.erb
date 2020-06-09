@@ -1,0 +1,28 @@
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <div class="card bg-light mb-3 text-dark shadow-sm">
+          <div class="card-header">
+            <h4 class="card-title text-center"><strong>IFRN</strong></h4>
+          </div>  
+          <div class="card-body d-flex flex-column justify-content-center">
+              <h1 class="card-title align-self-center"><%= @ifrn.length %></h1>
+              <h4 class="card-title align-self-center">Disponíveis</h4>
+              <%= button_to 'Iniciar Correção', validate_correction_path(@ifrn.sample.hash_id), class: "btn btn-primary btn-block align-self-center",
+              method: :get unless @ifrn.empty? %>
+          </div>  
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-light mb-3 text-dark shadow-sm">
+          <div class="card-header">
+            <h4 class="card-title text-center"><strong>ENEM</strong></h4>
+          </div>  
+          <div class="card-body d-flex flex-column justify-content-center">
+              <h1 class="card-title align-self-center"><%= @enem.length %></h1>
+              <h4 class="card-title align-self-center">Disponíveis</h4>
+              <%= button_to 'Iniciar Correção', validate_correction_path(@enem.sample.hash_id), class: "btn btn-primary btn-block align-self-center",
+              method: :get unless @enem.empty? %>
+          </div>  
+        </div>
+    </div>
+</div>

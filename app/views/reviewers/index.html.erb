@@ -1,0 +1,32 @@
+<h1>All reviewers</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>City</th>
+      <th>CPF</th>
+      <th>Reviewed</th>
+      <th colspan="5"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @reviewers.each do |reviewer| %>
+    <tr>
+      <td><%= reviewer.user.name %></td>
+      <td><%= reviewer.user.email %></td>
+      <td><%= reviewer.user.address.city %></td>
+      <td><%= reviewer.user.cpf %></td>
+      <td><%= reviewer.reviewed %></td>
+      <% if reviewer.user.active? %>
+      <td><%= link_to 'Deactivate', deactivate_reviewer_path(reviewer), method: 'patch' %></td>
+      <% else %>
+      <td><%= link_to 'Activate', activate_reviewer_path(reviewer), method: 'patch' %></td>
+      <% end %>
+      <td><%= link_to 'Delete', destroy_reviewer_path(reviewer), method: 'delete' %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate %>
+<%= link_to  "Back", home_path %>

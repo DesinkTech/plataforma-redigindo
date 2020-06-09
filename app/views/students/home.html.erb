@@ -1,0 +1,54 @@
+<!-- <p id="notice"><%= notice %></p> -->
+<div class="row">
+    <div class="col-md-6 ">
+        <div class="card shadow-sm mb-3 text-dark">
+            <div class="card-body">
+                <h5 class="card-title">Redações Enviadas</h5>
+                <h3 class="card-text"><%= current_user.student.submissions %></h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 ">
+        <div class="card shadow-sm mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Redações Corrigidas</h5>
+                <h3 class="card-text"><%= current_user.student.reviewed_submissions %></h3>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 ">
+        <div class="card shadow-sm mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Ultimas Submissões</h5>
+                <div class="table-responsive-md">
+                    <table class="table table-bordered table-striped  ">
+                        <thead>
+                            <tr>
+                                <th>Tema</th>
+                                <th>Corrigida em</th>
+                                <th>Corrigida por</th>
+                                <th>Pontuação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% get_student_finished_corrections(5).each do |correction| %>
+                            <tr>
+                                <td class="align-middle"><%= correction.essay.theme.description %></td>
+                                <td class="align-middle"><%= correction.end_date.strftime("%d/%m/%Y") %></td>
+                                <% if correction.admin %>
+                                <td class="align-middle"><%= correction.admin.user.username %></td>
+                                <% else %>
+                                <td class="align-middle"><%= correction.reviewer.user.username %></td>
+                                <% end %>
+                                <td class="align-middle"><%= correction.final_score %></td>
+                            </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

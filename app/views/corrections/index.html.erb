@@ -1,0 +1,113 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-3 text-dark shadow-sm">
+            <div class="card-header">
+                <ul id="tabs" class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#review">
+                            Em Revisão
+                            <span class="badge badge-pill badge-primary"><%= @correcting_count %></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#reviewed">
+                            Corrigidas
+                            <span class="badge badge-pill badge-primary"><%= @corrected_count %></span>
+                        </a>
+                    </li>
+                    <div class="ml-auto">
+                        <%= link_to new_correction_path, class: "btn btn-link card-link" do %>
+                        <span>Nova Correção</span>
+                        <% end %>
+                    </div>
+                </ul>
+            </div>
+            <div class="card-body tab-content ">
+                <div id="review" class="tab-pane container fade show" role="tabpanel" aria-labelledby="review-tab">
+                    <div class="table-responsive-md">
+                        <table class="table table-bordered table-striped  ">
+                            <thead>
+                                <th>Tema</th>
+                                <th>Autor</th>
+                                <th>Data de Início</th>
+                                <th>Iniciada por</th>
+                            </thead>
+                            <tbody>
+                                <% @correcting.each do |correcting| %>
+                                <tr>
+                                    <td class="align-middle"><%= correcting.essay.theme.description %></td>
+                                    <td class="align-middle"><%= correcting.student.user.username %></td>
+                                    <td class="align-middle"><%= correcting.start_date.strftime("%d/%m/%Y") %></td>
+                                    <td class="align-middle"><%= correcting.admin ? correcting.admin.user.username : correcting.reviewer.user.username %></td>
+                                    <td class="align-middle">
+                                        <%= link_to start_correction_path(correcting.hash_id), class: "btn btn-link" do %>
+                                        <span data-toggle="tooltip" data-placement="top" title="Continuar Correção">
+                                            <%= fa_icon 'pencil-alt' %>
+                                        </span>
+                                        <% end %>
+                                    </td>
+                                </tr>
+                                <% end %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="reviewed" class="tab-pane container fade" role="tabpanel" aria-labelledby="reviewed-tab">
+                    <div class="table-responsive-md">
+                        <table class="table table-bordered table-striped  ">
+                            <thead>
+                                <th>Tema</th>
+                                <th>Data de Início</th>
+                                <th>Data de Conclusão</th>
+                                <th>Corrigida por</th>
+                                <th>Pontuação</th>
+                            </thead>
+                            <tbody>
+                                <% @corrected.each do |corrected| %>
+                                <tr>
+                                    <td class="align-middle"><%= corrected.essay.theme.description %></td>
+                                    <td class="align-middle"><%= corrected.start_date.strftime("%d/%m/%Y") %></td>
+                                    <td class="align-middle"><%= corrected.end_date.strftime("%d/%m/%Y") %></td>
+                                    <td class="align-middle">
+                                        <%= corrected.admin ? corrected.admin.user.username : corrected.reviewer.user.username %>
+                                    </td>
+                                    <td class="align-middle"><%= corrected.final_score %></td>
+                                    <td class="align-middle">
+                                        <% if corrected.valid_essay %>
+                                        <%= link_to show_correction_path(corrected.hash_id), class: "btn btn-link" do %>
+                                        <span data-toggle="tooltip" data-placement="top" title="Detalhes">
+                                            <%= fa_icon 'eye' %>
+                                        </span>
+                                        <% end %>
+                                        <% else %>
+                                        <small class="text-danger">Inválida!</small>
+                                        <% end %>
+                                    </td>
+                                </tr>
+                                <% end %>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <%= will_paginate @corrected, list_classes: %w(pagination justify-content-center),
+                        next_label: "&#62;", previous_label: "&#60;"  %>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('a[data-toggle=tab]').on('show.bs.tab', function (e) {
+            localStorage.setItem('activeTab', $(e.target).attr('href'));
+        })
+
+        var activeTab = localStorage.getItem('activeTab');
+        if (activeTab) {
+            $("#tabs a[href='" + activeTab + "']").tab('show');
+        }
+    });
+</script>

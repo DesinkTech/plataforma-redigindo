@@ -1,0 +1,90 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-3 text-dark shadow-sm ">
+            <div class="card-body align-self-center">
+                <h5 class="card-title pl-2">Redação Enviada</h5>
+                <a href="#" data-toggle="modal" data-target="#essayModal">
+                    <%= image_tag @correction.essay.file.variant(resize: '498x694') if @correction.essay.file.attached? %>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="essayModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="essayModal" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Redação Enviada</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body align-self-center">
+                    <%= image_tag @correction.essay.file.variant(resize: '1123x1587') if @correction.essay.file.attached? %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-3 text-dark shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Correção</h5>
+                        <h6><strong>Tema: </strong><%= @correction.essay.theme.description %></h6>
+                        <h6><strong>Data Inicial: </strong><%= @correction.start_date.strftime("%d/%m/%Y") %></h6>
+                        <h6><strong>Data Final: </strong><%= @correction.end_date.strftime("%d/%m/%Y") %></h6>
+                        <h6>
+                            <strong>Corrigida por:</strong>
+                            <%= @correction.admin ? @correction.admin.user.username : @correction.reviewer.user.username %>
+                        </h6>
+
+                        <% if current_user.admin? %>
+                        <h6><strong>Enviada por: </strong><%= @correction.student.user.username %></h6>
+                        <% end %>
+
+                        <h5><strong class="text-primary">Pontuação Final: </strong><%= @correction.final_score %></h5>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+                <div class="card mb-3 text-dark shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Comentário Final</h5>
+                            <textarea class="form-control" rows="8" style="resize: none;" readonly><%= @correction.final_comment %></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card mb-3 text-dark shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Comentários</h5>
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Linha</th>
+                                    <th>Comentário</th>
+                                    <th>Competência</th>
+                                    <th>Penalidade</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% @correction.correction_comments.each do |cc| %>
+                                <tr>
+                                    <td><%= cc.essay_line %></td>
+                                    <td><%= cc.comment.description %></td>
+                                    <td><%= cc.comment.competence.description %></td>
+                                    <td><%= cc.penalty %></td>
+                                </tr>
+                                <% end %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

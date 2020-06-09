@@ -1,0 +1,47 @@
+<%= form_for :session, url: login_path, html: {class: "d-flex flex-column flex-fill justify-content-around", 
+          style: "height: 100%" } do |f| %>
+
+<div class="d-flex flex-column justify-content-around input-group" style="height: 60%;">
+    <div class="field-div d-flex flex-column">
+        <%= f.label :email, 'Login', class: "input-label text-dark" %>
+        <div class="d-flex align-items-center border-bottom border-dark"
+            style="transition: border-color 150ms ease-in-out;">
+            <%= fa_icon "user", class: "text-primary",
+                      style: "font-size: 1.5em; margin: 1px 10px; padding: 5px" %>
+            <%= f.text_field :email, autocomplete: 'off', placeholder: "Redigindo@email.com", 
+                      class: "border-0 flex-fill align-self-stretch" %>
+        </div>
+    </div>
+
+    <div class="field-div d-flex flex-column" style="margin-top: 10px;">
+        <%= f.label :password, 'Senha', class: "input-label text-dark" %>
+        <div class="input-div d-flex align-items-center border-bottom border-dark">
+            <%= fa_icon "key", class: "text-primary",
+                      style: "font-size: 1.5em; margin: 1px 10px; padding: 5px" %>
+            <%= f.password_field :password, placeholder: "*********", 
+                      class: "border-0 flex-fill align-self-stretch" %>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-between" style="margin-top: 5px; padding: 0px 10px">
+    <div class="custom-control custom-checkbox">
+        <%= f.check_box :remember_me, class: "custom-control-input" %>
+        <%= f.label :remember_me, "Lembrar-me", class: "custom-control-label text-dark",
+              style: "font-size: 0.96em;" %>
+    </div>
+    <%= link_to "Esqueceu a senha?", password_reset_path, class: "card-link" %>
+</div>
+
+<div class="submit-div d-flex justify-content-center">
+    <%= f.submit "Login", class: "btn btn-outline-primary btn-lg btn-inicial border- rounded-pill font-weight-bolder
+          text-uppercase", style: "padding: 10px 50px; border-width: 2px;" %>
+</div>
+<% end %>
+</div>
+
+<div class="card shadow flex-row justify-content-center "
+    style="width: 450px; padding: 12px 45px; margin-bottom: 10px; border-radius: 25px;">
+    <span class="text-dark" style="margin-right: 5px;">Novo na plataforma? </span>
+    <%= link_to " Crie sua conta!", signup_path, class: "card-link" %>
+</div>

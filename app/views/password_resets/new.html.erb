@@ -1,0 +1,27 @@
+<div class="card-header bg-white align-self-center">
+    <h3 class="card-title">Resetar Senha</h3>
+</div>
+
+<div class="align-self-center flex-fill" style="width: 100%; padding: 10px">
+    <%= form_with(url: password_reset_path, local: true ,html: { 
+        class: "d-flex flex-column justify-content-around align-items-center", 
+        style: "height: 100%" }) do |f| %>
+
+    <div class="field-div d-flex flex-column">
+        <div class="input-div border-bottom border-dark d-flex">
+            <%= fa_icon "at", class: "text-primary",
+            style: "font-size: 1.5em; margin: 1px 10px; padding: 5px" %>
+            <%= f.text_field :email, autocomplete: 'off', placeholder: "Insira seu email Redigindo", 
+            class: "border-0 flex-fill align-self-stretch", autocomplete: "off" %>
+        </div>
+        <%= f.label :email, 'Enviaremos ao seu email o link para reset da senha',
+        class: "input-label text-dark" %>
+    </div>
+
+    <div class="submit-div">
+        <%= f.submit 'Enviar', class: "btn btn-outline-primary btn-lg btn-inicial rounded-pill font-weight-bolder
+        text-uppercase", style: "padding: 10px 50px; border-width: 2px;" %>
+    </div>
+
+    <% end %>
+</div>

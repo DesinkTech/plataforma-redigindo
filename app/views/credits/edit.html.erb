@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-3 text-dark shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Recarregar créditos</h5>
+                <%= form_with(model: @student, url: update_credits_path(@student), local: true, class: "d-flex flex-column") do |f| %>
+                <div class="form-group">
+                    <%= f.label :credits, "Creditos:" %>
+                    <%= f.number_field :credits, min: 0 ,value: 0, class: "form-control", autocomplete: "off" %>
+                </div>
+                <div class="form-group align-self-center">
+                    <%= f.submit "Recarregar", class: "btn btn-primary" %>
+                    <%= button_to "Recarregar pagamento mensal", update_credits_path(@student), method: :patch, params: { student: { credits: 5 } },
+                        class: "btn btn-primary" %>
+                    <%= link_to 'Cancelar', students_path, class: "btn btn-primary" %>
+                </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>

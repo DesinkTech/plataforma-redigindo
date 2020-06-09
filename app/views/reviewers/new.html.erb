@@ -1,0 +1,56 @@
+<h1>Reviewer - Sign Up</h1>
+
+
+<%= form_with(model: @reviewer, url: reviewers_signup_path, local: true) do |f| %>
+
+
+<%= f.fields_for :user do |user_field| %>
+<div>
+    <%= user_field.label :email, 'Email' %>
+    <%= user_field.text_field :email %>
+    <span><%= @reviewer.user.errors.messages[:email].first if @reviewer.errors.any? %></span>
+</div>
+<div>
+    <%= user_field.label :password, 'Password' %>
+    <%= user_field.password_field :password %>
+    <span><%= @reviewer.user.errors.messages[:password].first if @reviewer.errors.any? %></span>
+</div>
+<div>
+    <%= user_field.label :password_confirmation, 'Password Confirmation' %>
+    <%= user_field.password_field :password_confirmation %>
+    <span><%= @reviewer.user.errors.messages[:password_confirmation].first if @reviewer.errors.any? %></span>
+</div>
+<div>
+    <%= user_field.label :name, 'Name' %>
+    <%= user_field.text_field :name %>
+    <span><%= @reviewer.user.errors.messages[:name].first if @reviewer.errors.any? %></span>
+</div>
+<div>
+    <%= user_field.label :birth_date, 'Birth Date' %>
+    <%= user_field.date_field :birth_date %>
+    <span><%= @reviewer.user.errors.messages[:birth_date].first if @reviewer.errors.any? %></span>
+</div>
+<div>
+    <%= user_field.label :cpf, 'CPF' %>
+    <%= user_field.text_field :cpf %>
+    <span><%= @reviewer.user.errors.messages[:cpf].first if @reviewer.errors.any? %></span>
+</div>
+<div>
+    <%= user_field.label :rg, 'RG' %>
+    <%= user_field.text_field :rg %>
+    <span><%= @reviewer.user.errors.messages[:rg].first if @reviewer.errors.any? %></span>
+</div>
+
+<div>
+    <%= user_field.label :address_id, 'City' %>
+    <%= user_field.select 'address_id', @address_options ,{ include_blank: 'Selecione a cidade...'} %>
+    <span><%= @reviewer.user.errors.messages[:address].first if @reviewer.errors.any? %></span>
+</div>
+<% end %>
+
+<div>
+    <%= f.submit 'Register' %>
+</div>
+<% end %>
+
+<%= link_to "Back", login_path %>

@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+<% if current_user %>
+<ul>
+    <li>Logged As: <%= current_user.name %></li>
+    <li><%= link_to 'Profile', reviewer_path(current_user.name.delete(' ')) %></li>
+    <li><%= link_to 'Logout', logout_path, method: 'delete' %></li>
+<ul>
+<% end %>
+
+<h1>Welcome Reviewer!</h1>

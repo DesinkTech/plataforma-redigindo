@@ -1,0 +1,27 @@
+<%= form_with(model: @theme, local: true, class: "d-flex flex-column") do |f| %>
+
+<div class="form-group">
+    <%= f.label :description, "Tema:" %>
+    <%= f.text_field :description, class: "form-control", autocomplete: "off" %>
+    <span class="text-danger"><%= @theme.errors.messages[:description].first if @theme.errors.any? %></span>
+</div>
+
+<div class="form-group align-self-center">
+    <%= f.button class: "btn btn-primary mr-2" do %>
+    <span>Salvar</span>
+    <% end %>
+
+    <%= link_to themes_path, class: "btn btn-primary mr-2" do %>
+    <span>Cancelar</span>
+    <% end %></div>
+<% end %>
+
+<% if @theme.errors.any? %>
+<script>
+
+    $(".form-group input, .form-group select").each(function () {
+        $(this).removeClass("border-dark").addClass("border-danger");
+    })
+
+</script>
+<% end %>

@@ -1,0 +1,37 @@
+<%= form_with(model: @category, local: true, class: "d-flex flex-column") do |f| %>
+
+<div class="form-group">
+    <%= f.label :description, "Categoria:" %>
+    <%= f.text_field :description, class: 'form-control', autocomplete: "off" %>
+    <span class="text-danger"><%= @category.errors.messages[:description].first if @category.errors.any? %></span>
+</div>
+
+<div class="form-group">
+    <%= f.label :max_score, "Pontuação Máxima:" %>
+    <%= f.number_field :max_score, min:0 ,placeholder: 0, class: "form-control", autocomplete: "off" %>
+    <span class="text-danger"><%= @category.errors.messages[:max_score].first if @category.errors.any? %></span>
+</div>
+
+<div class="form-group align-self-center">
+    <%= f.button class: "btn btn-primary mr-2" do %>
+     
+    <span>Salvar</span>
+    <% end %>
+    
+    <%= link_to categories_path, class: "btn btn-primary mr-2" do %>
+    
+    <span>Cancelar</span>
+    <% end %>
+</div>
+
+<% end %>
+
+<% if @category.errors.any? %>
+<script>
+
+    $(".form-group input, .form-group select").each(function () {
+        $(this).removeClass("border-dark").addClass("border-danger");
+    })
+
+</script>
+<% end %>
