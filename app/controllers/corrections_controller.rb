@@ -40,9 +40,9 @@ class CorrectionsController < ApplicationController
     @essay.toggle :active
 
     if current_user.admin?
-      @correction.admin_id = current_user.id
+      @correction.admin_id = current_user.admin.id
     else
-      @correction.reviewer_id = current_user.id
+      @correction.reviewer_id = current_user.reviewer.id
     end
 
     if correction_params[:valid_essay] == 'false'

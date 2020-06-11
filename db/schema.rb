@@ -2,11 +2,11 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `rails
+# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
@@ -197,4 +197,25 @@ ActiveRecord::Schema.define(version: 2020_05_25_143431) do
     t.index ["role_id"], name: "index_users_on_role_id"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "admins", "users"
+  add_foreign_key "comments", "competences"
+  add_foreign_key "competences", "categories"
+  add_foreign_key "correction_comments", "comments"
+  add_foreign_key "correction_comments", "corrections"
+  add_foreign_key "correction_competences", "competences"
+  add_foreign_key "correction_competences", "corrections"
+  add_foreign_key "corrections", "admins"
+  add_foreign_key "corrections", "essays"
+  add_foreign_key "corrections", "reviewers"
+  add_foreign_key "corrections", "students"
+  add_foreign_key "essays", "categories"
+  add_foreign_key "essays", "students"
+  add_foreign_key "essays", "themes"
+  add_foreign_key "reviewers", "users"
+  add_foreign_key "students", "categories", on_delete: :cascade
+  add_foreign_key "students", "schools"
+  add_foreign_key "students", "users"
+  add_foreign_key "users", "addresses"
+  add_foreign_key "users", "roles"
 end
