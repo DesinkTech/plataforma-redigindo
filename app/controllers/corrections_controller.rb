@@ -68,11 +68,14 @@ class CorrectionsController < ApplicationController
 
     if correction_params[:essay_line].empty?
       redirect_to start_correction_path(@correction.hash_id), error: "A linha deve ser preenchida"
+    elsif correction_params[:text_cut].empty?
+      redirect_to start_correction_path(@correction.hash_id), error: "O recorte de texto deve ser especificado"
     else
       cc = @correction.correction_comments.create({
         correction_id: @correction.id,
         comment_id: @comment.id,
         essay_line: correction_params[:essay_line],
+        text_cut: correction_params[:text_cut],
         penalty: correction_params[:penalty]
       })
         
@@ -107,7 +110,7 @@ class CorrectionsController < ApplicationController
   private
 
   def correction_params
-    params.require(:correction).permit(:valid_essay, :essay_line, :final_comment, :penalty)
+    params.require(:correction).permit(:valid_essay, :essay_line, :text_cut, :final_comment, :penalty)
   end
 
   def set_correction

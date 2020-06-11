@@ -6,7 +6,7 @@ class CorrectionComment < ApplicationRecord
   belongs_to :correction
   belongs_to :comment
 
-  validates :correction, :comment, :essay_line, :penalty, presence: true
+  validates :correction, :comment, :essay_line, :text_cut, :penalty, presence: true
   validates :essay_line, numericality: { only_integer: true, less_than_or_equal_to: 30, greater_than_or_equal_to: 0 }
   validates :penalty, numericality: { only_integer: true, less_than_or_equal_to: 0, greater_than_or_equal_to: -200 }
 

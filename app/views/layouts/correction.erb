@@ -32,7 +32,7 @@
       }
       
       .main-content {
-        padding: 32px;
+        padding: 28px 12px;
       }
       
       .notification-icon {
@@ -107,46 +107,8 @@
     </main>
     <script>
       $(document).ready(function () {
-        let ToggleSubMenu = function () {
-          $('.collapse').collapse('toggle');
-          $('.submenu-link').toggleClass('active');
-          $('.submenu-link').children().toggleClass('active');
-          $('.submenu-link').children('.menu-expand').toggleClass('expanded');
-        }
-      
-        let ToggleMenu = function () {
-          $('#sidebarToggler').toggleClass('open');
-          $('.sidebar').toggleClass('menu-open');
-      
-          if ($('.submenu-link').hasClass('active')) {
-            ToggleSubMenu();
-          }
-      
-          $('.sidebar').one("webkitTransitionend otransitionend oTransitionend msTransitionend transitionend", function () {
-            $('.link-label').toggleClass('d-none');
-            $('.menu-expand').toggleClass('d-none');
-            $('.footer-link').toggleClass('d-none');
-          })
-      
-          $('.menu-link').toggleClass('justify-content-center');
-          $('.footer-link').toggleClass('justify-content-center');
-        }
-      
-      
+        $('[data-toggle="tooltip"]').tooltip()
         $('.toast').toast('show');
-      
-        $('#sidebarToggler').on('click', function () {
-          ToggleMenu();
-        });
-      
-        $(".submenu-link").on('click', function () {
-          if (!$('.sidebar').hasClass('menu-open')) {
-            $('#sidebarToggler').trigger('click');
-          }
-      
-          ToggleSubMenu();
-        })
-      
       
       })
     </script>
