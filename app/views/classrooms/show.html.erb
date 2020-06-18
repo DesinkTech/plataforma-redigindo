@@ -1,0 +1,67 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-3 text-dark shadow-sm">
+            <div class="card-body overflow-auto">
+                <h5 class="card-title">Alunos - <%= @classroom.name %></h5>
+                <div class="table-responsive-md">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <th class="text-center" style="width: 3%">Matrícula</th>
+                            <th style="width: 27%">Username</th>
+                            <th style="width: 23%">Email</th>
+                            <th style="width: 7%">Categoria</th>
+                            <th style="width: 5%">Créditos</th>
+                        </thead>
+                        <tbody>
+                            <% @students.each do |student| %>
+                            <tr>
+                                <td class="align-middle"><%= student.registration_number %></td>
+                                <td class="align-middle"><%= student.user.username %></td>
+                                <td class="align-middle"><%= student.user.email %></td>
+                                <td class="align-middle"><%= student.category.description %></td>
+                                <td class="align-middle"><%= student.credits %></td>
+                                <td class="align-middle">
+                                    <%= link_to student_path(@classroom, student), class: "btn btn-link" do %>
+                                    <span data-toggle="tooltip" data-placement="top" title="Detalhes">
+                                        <%= fa_icon 'eye' %>
+                                    </span>
+                                    <% end %>
+
+                                    <%= link_to edit_credits_path(student), class: "btn btn-link" do %>
+                                    <span data-toggle="tooltip" data-placement="top" title="Adicionar Créditos">
+                                        <%= fa_icon 'donate' %>
+                                    </span>
+                                    <% end %>
+
+                                    <% if student.user.active %>
+                                    <%= link_to deactivate_student_path(@classroom, student), method: 'patch', class: "btn btn-link" do %>
+                                    <span data-toggle="tooltip" data-placement="top" title="Desativar Usuário">
+                                        <%= fa_icon 'lightbulb' %>
+                                    </span>
+                                    <% end %>
+                                    <% else %>
+                                    <%= link_to activate_student_path(@classroom, student), method: 'patch', class: "btn btn-link" do %>
+                                    <span data-toggle="tooltip" data-placement="top" title="Ativar Usuário">
+                                        <%= fa_icon 'lightbulb', type: :regular %>
+                                    </span>
+                                    <% end %>
+                                    <% end %>
+
+                                    <%= link_to destroy_student_path(@classroom, student), method: 'delete', class: "btn btn-link" do %>
+                                    <span data-toggle="tooltip" data-placement="top" title="Remover">
+                                        <%= fa_icon 'trash' %>
+                                    </span>
+                                    <% end %>
+                                </td>
+                            </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
+                </div>
+
+                <%= will_paginate @students, list_classes: %w(pagination justify-content-center),
+                                        next_label: "&#62;", previous_label: "&#60;"  %>
+            </div>
+        </div>
+    </div>
+</div>

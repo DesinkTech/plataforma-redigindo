@@ -13,7 +13,7 @@
                 <h6><strong>Cidade: </strong> <%= @student.user.address.city %>-<%= @student.user.address.state %></h6>
                 <h6><strong>Escola: </strong> <%= @student.school.name %></h6>
                 <h6><strong>Categoria: </strong> <%= @student.category.description %></h6>
-                <%= link_to 'Voltar', students_path, class: "align-self-center btn btn-primary" %>
+                <%= link_to 'Voltar', classroom_path(@student.classroom), class: "align-self-center btn btn-primary" %>
             </div>
         </div>
     </div>

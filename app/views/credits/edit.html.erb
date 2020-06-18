@@ -8,13 +8,13 @@
                     <%= f.label :credits, "Creditos:" %>
                     <%= f.number_field :credits, min: 0 ,value: 0, class: "form-control", autocomplete: "off" %>
                 </div>
-                <div class="form-group align-self-center">
-                    <%= f.submit "Recarregar", class: "btn btn-primary" %>
+                <div class="form-group align-self-center d-flex">
+                    <%= f.submit "Recarregar", class: "btn btn-primary mr-1" %>
+                    <% end %>
                     <%= button_to "Recarregar pagamento mensal", update_credits_path(@student), method: :patch, params: { student: { credits: 5 } },
-                        class: "btn btn-primary" %>
-                    <%= link_to 'Cancelar', students_path, class: "btn btn-primary" %>
+                    class: "btn btn-primary mr-1" %>
+                    <%= link_to 'Cancelar', classroom_path(@student.classroom), class: "btn btn-primary" %>
                 </div>
-                <% end %>
             </div>
         </div>
     </div>

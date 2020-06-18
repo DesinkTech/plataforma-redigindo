@@ -15,6 +15,8 @@
                             aria-selected="false">Escolaridade</a>
                         <a class="nav-link" data-toggle="pill" href="#category" role="tab" aria-controls="category"
                             aria-selected="false">Categoria</a>
+                        <a class="nav-link" data-toggle="pill" href="#classroom" role="tab" aria-controls="classroom"
+                            aria-selected="false">Turma</a>
                     </div>
                 </div>
                 <div class="col-9">
@@ -25,65 +27,75 @@
                         <div class="form-group">
                             <%= user_field.label :email, 'Email:' %>
                             <%= user_field.text_field :email, class: "form-control", placeholder: "Email", autocomplete: "off" %>
-                            <span class="text-danger"><%= @student.user.errors.messages[:email].first if @student.errors.any? %></span>
+                            <span
+                                class="text-danger"><%= @student.user.errors.messages[:email].first if @student.errors.any? %></span>
                         </div>
                         <div class="form-group">
                             <%= user_field.label :username, 'Username:' %>
                             <%= user_field.text_field :username, class: "form-control", placeholder: "Username", autocomplete: "off" %>
-                            <span class="text-danger"><%= @student.user.errors.messages[:username].first if @student.errors.any? %></span>
+                            <span
+                                class="text-danger"><%= @student.user.errors.messages[:username].first if @student.errors.any? %></span>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
                         <div class="form-group">
                             <%= user_field.label :password, 'Senha:' %>
                             <%= user_field.password_field :password, class: "form-control", placeholder: "*********" %>
-                            <span class="text-danger"><%= @student.user.errors.messages[:password].first if @student.errors.any? %></span>
+                            <span
+                                class="text-danger"><%= @student.user.errors.messages[:password].first if @student.errors.any? %></span>
 
                         </div>
                         <div class="form-group">
                             <%= user_field.label :password_confirmation, 'Confirmar Senha:' %>
                             <%= user_field.password_field :password_confirmation, class: "form-control", placeholder: "*********" %>
-                            <span class="text-danger"><%= @student.user.errors.messages[:password_confirmation].first if @student.errors.any? %></span>
+                            <span
+                                class="text-danger"><%= @student.user.errors.messages[:password_confirmation].first if @student.errors.any? %></span>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="personal" role="tabpanel" aria-labelledby="personal-tab">
                         <div class="form-group">
                             <%= user_field.label :name, 'Nome:' %>
                             <%= user_field.text_field :name, class: "form-control", placeholder: "Name", autocomplete: "off" %>
-                            <span class="text-danger"><%= @student.user.errors.messages[:name].first if @student.errors.any? %></span>
+                            <span
+                                class="text-danger"><%= @student.user.errors.messages[:name].first if @student.errors.any? %></span>
 
                         </div>
                         <div class="form-group">
                             <%= user_field.label :birth_date, 'Data de Nascimento:' %>
                             <%= user_field.date_field :birth_date, class: "form-control", placeholder: "Birth Date", autocomplete: "off" %>
-                            <span class="text-danger"><%= @student.user.errors.messages[:birth_date].first if @student.errors.any? %></span>
+                            <span
+                                class="text-danger"><%= @student.user.errors.messages[:birth_date].first if @student.errors.any? %></span>
 
                         </div>
                         <div class="form-group">
                             <%= user_field.label :cpf, 'CPF:' %>
                             <%= user_field.text_field :cpf, class: "form-control", placeholder: "CPF", autocomplete: "off" %>
-                            <span class="text-danger"><%= @student.user.errors.messages[:cpf].first if @student.errors.any? %></span>
+                            <span
+                                class="text-danger"><%= @student.user.errors.messages[:cpf].first if @student.errors.any? %></span>
                         </div>
                         <div class="form-group">
                             <%= user_field.label :rg, 'RG:' %>
                             <%= user_field.text_field :rg, class: "form-control", placeholder: "RG", autocomplete: "off" %>
-                            <span class="text-danger"><%= @student.user.errors.messages[:rg].first if @student.errors.any? %></span>
+                            <span
+                                class="text-danger"><%= @student.user.errors.messages[:rg].first if @student.errors.any? %></span>
                         </div>
                         <div class="form-group">
                             <%= user_field.label :address_id, 'Cidade:' %>
                             <%= user_field.select 'address_id', @address_options ,{ include_blank: 'Selecione a cidade...'},
                             class: "form-control custom-select" %>
-                            <span class="text-danger"><%= @student.user.errors.messages[:address].first if @student.errors.any? %></span>
+                            <span
+                                class="text-danger"><%= @student.user.errors.messages[:address].first if @student.errors.any? %></span>
                         </div>
                     </div>
                     <% end %>
-                    
+
                     <div class="tab-pane fade" id="scholarity" role="tabpanel" aria-labelledby="scholarity-tab">
                         <div class="form-group">
                             <%= f.label :school_id, 'Escola:' %>
                             <%= f.select 'school_id', @school_options ,{ include_blank: 'Selecione a escola...'},
                             class: "form-control custom-select" %>
-                            <span class="text-danger"><%= @student.errors.messages[:school].first if @student.errors.any? %></span>
+                            <span
+                                class="text-danger"><%= @student.errors.messages[:school].first if @student.errors.any? %></span>
                         </div>
 
                     </div>
@@ -92,15 +104,25 @@
                             <%= f.label :category_id, 'Categoria:' %>
                             <%= f.select 'category_id', @category_options ,{ include_blank: 'Selecione a categoria...'},
                             class: "form-control custom-select" %>
-                            <span class="text-danger"><%= @student.errors.messages[:category].first if @student.errors.any? %></span>
+                            <span
+                                class="text-danger"><%= @student.errors.messages[:category].first if @student.errors.any? %></span>
                         </div>
                     </div>
 
+                    <div class="tab-pane fade" id="classroom" role="tabpanel" aria-labelledby="classroom-tab">
+                        <div class="form-group">
+                            <%= f.label :classroom_id, 'Turma:' %>
+                            <%= f.select 'classroom_id', @classroom_options ,{ include_blank: 'Selecione a turma...'},
+                                                    class: "form-control custom-select" %>
+                            <span
+                                class="text-danger"><%= @student.errors.messages[:category].first if @student.errors.any? %></span>
+                        </div>
+                    </div>
                     <% end %>
                 </div>
                 <div class="col-12 d-flex justify-content-center mt-3">
                     <input type="submit" value="Salvar" form="update_form" name="commit"
-                    class= "btn btn-outline-primary" >
+                        class="btn btn-outline-primary">
                 </div>
             </div>
         </div>

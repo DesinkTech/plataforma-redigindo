@@ -81,6 +81,16 @@
     <% end %>
 
     <div class="field-div d-flex flex-column">
+        <%= f.label :classroom_id, 'Turma', class: "input-label text-dark"  %>
+        <div class="input-div border-bottom border-dark d-flex">
+            <%= f.select 'classroom_id', @classroom_options ,{ include_blank: 'Selecione sua turma...'},
+            class: "custom-select border-0 flex-fill align-self-stretch",
+            style: "box-shadow: none" %>
+        </div>
+        <span class="text-danger"><%= @student.errors.messages[:classroom].first if @student.errors.any? %></span>
+    </div>
+
+    <div class="field-div d-flex flex-column">
         <%= f.label :school_id, 'Escola', class: "input-label text-dark"  %>
         <div class="input-div border-bottom border-dark d-flex">
             <%= f.select 'school_id', @school_options ,{ include_blank: 'Selecione sua escola...'},
