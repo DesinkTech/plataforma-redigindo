@@ -29,6 +29,7 @@
 
 - 'Classrooms' to contain 'Students';
 - Attach files to 'Themes';
+- Image compression and normalization on 'Essays' uploaded files;
 
 ##### Changed
 
