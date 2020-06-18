@@ -1,8 +1,11 @@
 class Theme < ApplicationRecord
-  before_save :fill_hash_id
+  before_create :fill_hash_id
   has_many :essays
 
+  has_one_attached :support_material
+  
   validates :description, presence: true
+  validates :support_material, content_type: 'application/pdf'
 
   private
 

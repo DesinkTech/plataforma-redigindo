@@ -28,6 +28,7 @@
 ##### Added
 
 - 'Classrooms' to contain 'Students';
+- Attach files to 'Themes';
 
 ##### Changed
 

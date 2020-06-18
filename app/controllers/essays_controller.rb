@@ -17,6 +17,7 @@ class EssaysController < ApplicationController
 
   def submit
     @essay = Essay.new
+    @theme = Theme.find_by(hash_id: params[:theme_hash_id])
   end
 
   def create

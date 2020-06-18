@@ -6,6 +6,13 @@
     <span class="text-danger"><%= @theme.errors.messages[:description].first if @theme.errors.any? %></span>
 </div>
 
+<%= f.label "Material Suporte:" %>
+<div class="custom-file mb-3">
+    <%= f.file_field :support_material, accept: 'application/pdf', class: "custom-file-input" %>
+    <%= f.label :support_material, @theme.support_material.attached? ? @theme.support_material.filename.to_s : "Escolha o arquivo...", class: "custom-file-label" %>
+    <span class="text-danger"><%= @theme.errors.messages[:support_material].first if @theme.errors.any? %></span>
+</div>
+
 <div class="form-group align-self-center">
     <%= f.button class: "btn btn-primary mr-2" do %>
     <span>Salvar</span>

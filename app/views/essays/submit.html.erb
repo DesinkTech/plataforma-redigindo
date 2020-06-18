@@ -11,6 +11,18 @@
             </div>
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="card justify-content-center shadow-sm mb-4">
+            <h5 class="card-header">Faça download do material suporte do tema </h5>
+            <div class="card-body align-self-center">
+                <%= link_to rails_blob_path(@theme.support_material, disposition: "attachment"), class: "btn btn-link" do %>
+                <span data-toggle="tooltip" data-placement="bottom" title="Download">
+                    <%= fa_icon "file-download 3x" %>
+                </span>
+                <% end %>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row justify-content-center">
