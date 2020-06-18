@@ -20,7 +20,7 @@ class SubmissionsController < ApplicationController
 
     @corrected = corrections.where.not(start_date: nil, end_date: nil).order(end_date: 'desc')
     @corrected_count = @corrected.count
-    @corrected = @corrected.paginate(page: params[:page], per_page: 25)
+    @corrected = @corrected.paginate(page: params[:page], per_page: 16)
   end
 
   private

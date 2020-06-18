@@ -3,7 +3,7 @@ class AddressesController < ApplicationController
   before_action :set_address, only: [:edit, :update, :destroy]
 
   def index
-    @addresses = Address.paginate(page: params[:page], per_page: 25)
+    @addresses = Address.paginate(page: params[:page], per_page: 16)
   end
 
   def new

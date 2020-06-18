@@ -8,7 +8,7 @@ class StudentsController < ApplicationController
   before_action :set_student, except: [:index, :new, :create]
 
   def index
-    @students = Student.includes(:category, :school, user: :address).paginate(page: params[:page], per_page: 25)
+    @students = Student.includes(:category, :school, user: :address).paginate(page: params[:page], per_page: 16)
       .where(users: { verified: true })
   end
 

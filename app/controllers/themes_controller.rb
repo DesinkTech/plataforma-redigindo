@@ -4,7 +4,7 @@ class ThemesController < ApplicationController
 
 
   def index
-    @themes = Theme.paginate(page: params[:page], per_page: 25)
+    @themes = Theme.paginate(page: params[:page], per_page: 16)
   end
 
   def new

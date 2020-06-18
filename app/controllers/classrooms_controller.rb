@@ -8,7 +8,7 @@ class ClassroomsController < ApplicationController
   end
 
   def show
-    @students = Student.includes(:category, :school, :classroom, user: :address).paginate(page: params[:page], per_page: 25)
+    @students = Student.includes(:category, :school, :classroom, user: :address).paginate(page: params[:page], per_page: 16)
       .where(users: { verified: true })
       .where(classroom_id: @classroom.id)
       .order(registration_number: 'asc')

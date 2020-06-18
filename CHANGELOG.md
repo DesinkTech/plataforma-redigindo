@@ -27,7 +27,9 @@
 
 ##### Added
 
-- 'Classrooms' to contain 'Students'
+- 'Classrooms' to contain 'Students';
 
 ##### Changed
+
+- Changed '_per_page_' number of 25 to 16; 
 

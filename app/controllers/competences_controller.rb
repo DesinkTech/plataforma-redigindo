@@ -4,11 +4,11 @@ class CompetencesController < ApplicationController
   before_action :abs_max_penalty, only: [:edit, :update]
 
   def index
-    @competences = Competence.paginate(page: params[:page], per_page: 25)
+    @competences = Competence.paginate(page: params[:page], per_page: 16)
   end
 
   def show
-    @comments = @competence.comments.paginate(page: params[:page], per_page: 25)
+    @comments = @competence.comments.paginate(page: params[:page], per_page: 16)
   end
 
   def new
@@ -18,12 +18,6 @@ class CompetencesController < ApplicationController
 
   def create
     @competence = Competence.new(competence_params)
-
-    puts "=========================================================="
-    puts @competence.attributes
-    puts @competence.valid?
-    puts @competence.errors.full_messages
-    puts "=========================================================="
 
     if @competence.save
       redirect_to category_path(@competence.category), success: "Competência criada com sucesso"

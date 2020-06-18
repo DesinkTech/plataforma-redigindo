@@ -7,7 +7,7 @@ class EssaysController < ApplicationController
   before_action :require_credits, only: [:new, :submit, :create]
 
   def index
-    @essays = Essay.includes(:student, :category, :theme).paginate(page: params[:page], per_page: 25)
+    @essays = Essay.includes(:student, :category, :theme).paginate(page: params[:page], per_page: 16)
     .where(active: true)
     .order(submission_date: 'desc')
   end

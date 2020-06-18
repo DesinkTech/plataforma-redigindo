@@ -3,11 +3,11 @@ class CategoriesController < ApplicationController
   before_action :set_category, except: [:index, :new]
 
   def index
-    @categories = Category.paginate(page: params[:page], per_page: 25)
+    @categories = Category.paginate(page: params[:page], per_page: 16)
   end
 
   def show
-    @competences = @category.competences.paginate(page: params[:page], per_page: 25)
+    @competences = @category.competences.paginate(page: params[:page], per_page: 16)
   end
 
   def new
