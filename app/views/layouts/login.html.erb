@@ -53,7 +53,8 @@
     }
 
     .input-div {
-      transition: border-color 150ms ease-in-out;
+      transition: border-width 100ms ease-in-out;
+      transition: border-color 200ms ease-in-out;
     }
 
     .submit-div {
@@ -63,6 +64,10 @@
     .btn-inicial:hover {
       color: white !important;
 
+    }
+
+    .border-2 {
+      border-width: 2px !important;
     }
   </style>
 </head>
@@ -113,6 +118,7 @@
           '#session_password',
           '#email',
           '#student_user_attributes_email',
+          '#student_user_attributes_username',
           '#student_user_attributes_password',
           '#student_user_attributes_password_confirmation',
           '#student_user_attributes_name',
@@ -120,6 +126,7 @@
           '#student_user_attributes_cpf',
           '#student_user_attributes_rg',
           '#student_user_attributes_address_id',
+          '#student_classroom_id',
           '#student_school_id',
           '#student_category_id',
           '#user_password',
@@ -129,9 +136,9 @@
         $.each(inputs, function (value) {
 
           $(inputs[value]).focus(function () {
-            $(inputs[value]).parent().removeClass('border-dark').addClass("border-primary");
+            $(inputs[value]).parent().removeClass('border-dark').addClass('border-2 border-secondary');
           }).blur(function () {
-            $(inputs[value]).parent().removeClass('border-primary').addClass("border-dark");
+            $(inputs[value]).parent().removeClass('border-2 border-secondary').addClass('border-dark');
           })
         })
 

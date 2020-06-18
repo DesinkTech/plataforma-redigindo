@@ -31,5 +31,6 @@
 
 ##### Changed
 
-- Changed '_per_page_' number of 25 to 16; 
+- Changed '_per_page_' number of 25 to 16;
+- Changed color and border-width of selected input in 'Login' layout; 
 
