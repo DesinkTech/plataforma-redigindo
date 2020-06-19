@@ -25,6 +25,8 @@
 #### v0.2.1 - 17/06/2020
 ##### Fixed
 
+- Modal showing only one file in 'Essays' index;
+
 ##### Added
 
 - 'Classrooms' to contain 'Students';
