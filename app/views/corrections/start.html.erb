@@ -75,29 +75,17 @@
                     <%= form_with(model: @correction, url: update_correction_path(@correction.hash_id), local: true) do |f| %>
 
                     <div class="form-group">
-                        <%= f.label :essay_line, "Linha" %>
-                        <%= f.text_field :essay_line, class: "form-control", autocomplete: "off" %>
-                    </div>
-
-                    <div class="form-group">
-                        <%= f.label :text_cut, "Recorte do Texto" %>
-                        <%= f.text_field :text_cut, class: "form-control", autocomplete: "off" %>
-                    </div>
-
-                    <div class="form-group">
-                        <%= f.label :penalty, "Penalidade" %>
-                        <%= f.number_field :penalty, min: 0,  max: -@correction.competences.first.max_penalty, value: 0, class: "form-control", autocomplete: "off" %>
+                        <%= f.label :extended_comment, "Comentário estendido:" %>
+                        <%= f.text_field :extended_comment, class: "form-control", autocomplete: "off" %>
                     </div>
 
                     <div class="accordion" id="accordionExample">
                         <div class="card">
                             <div class="d-block card-header text-left btn btn-link card-link" data-toggle="collapse"
-                                data-target="#gramatica" aria-expanded="true" aria-controls="gramatica">
-                                <h5 class="mb-0"><%= @competences[0].competence.description %> -
-                                    <strong><%= -@competences[0].competence.max_penalty + @competences[0].penalty %></strong>
-                                </h5>
+                                data-target="#comp1" aria-expanded="true" aria-controls="comp1">
+                                <h5 class="mb-0"><%= @competences[0].competence.description %></h5>
                             </div>
-                            <div id="gramatica" class="collapse" aria-labelledby="" data-prevent="#accordionExample">
+                            <div id="comp1" class="collapse" aria-labelledby="" data-prevent="#accordionExample">
                                 <%   @competences[0].competence.comments.each do |comment| %>
                                 <%= f.button comment.description, value: comment.id.to_s, name: 'comment', class: "btn btn-light btn-block text-left m-0 rounded-0" %>
                                 <% end %>
@@ -105,12 +93,10 @@
                         </div>
                         <div class="card">
                             <div class="d-block card-header text-left btn btn-link card-link" data-toggle="collapse"
-                                data-target="#compreensao" aria-expanded="true" aria-controls="compreensao">
-                                <h5 class="mb-0"><%= @competences[1].competence.description %> -
-                                    <strong><%= -@competences[1].competence.max_penalty + @competences[1].penalty %></strong>
-                                </h5>
+                                data-target="#comp2" aria-expanded="true" aria-controls="comp2">
+                                <h5 class="mb-0"><%= @competences[1].competence.description %></h5>
                             </div>
-                            <div id="compreensao" class="collapse" aria-labelledby="" data-prevent="#accordionExample">
+                            <div id="comp2" class="collapse" aria-labelledby="" data-prevent="#accordionExample">
                                 <%   @competences[1].competence.comments.each do |comment| %>
                                 <%= f.button comment.description, value: comment.id.to_s, name: 'comment', class: "btn btn-light btn-block text-left m-0 rounded-0" %>
                                 <% end %>
@@ -118,12 +104,10 @@
                         </div>
                         <div class="card">
                             <div class="d-block card-header text-left btn btn-link card-link" data-toggle="collapse"
-                                data-target="#argumentacao" aria-expanded="true" aria-controls="argumentacao">
-                                <h5 class="mb-0"><%= @competences[2].competence.description %> -
-                                    <strong><%= -@competences[2].competence.max_penalty + @competences[2].penalty %></strong>
-                                </h5>
+                                data-target="#comp3" aria-expanded="true" aria-controls="comp3">
+                                <h5 class="mb-0"><%= @competences[2].competence.description %></h5>
                             </div>
-                            <div id="argumentacao" class="collapse" aria-labelledby="" data-prevent="#accordionExample">
+                            <div id="comp3" class="collapse" aria-labelledby="" data-prevent="#accordionExample">
                                 <%   @competences[2].competence.comments.each do |comment| %>
                                 <%= f.button comment.description, value: comment.id.to_s, name: 'comment', class: "btn btn-light btn-block text-left m-0 rounded-0" %>
                                 <% end %>
@@ -131,12 +115,10 @@
                         </div>
                         <div class="card">
                             <div class="d-block card-header text-left btn btn-link card-link" data-toggle="collapse"
-                                data-target="#coesao" aria-expanded="true" aria-controls="coesao">
-                                <h5 class="mb-0"><%= @competences[3].competence.description %> -
-                                    <strong><%= -@competences[3].competence.max_penalty + @competences[3].penalty %></strong>
-                                </h5>
+                                data-target="#comp4" aria-expanded="true" aria-controls="comp4">
+                                <h5 class="mb-0"><%= @competences[3].competence.description %></h5>
                             </div>
-                            <div id="coesao" class="collapse" aria-labelledby="" data-prevent="#accordionExample">
+                            <div id="comp4" class="collapse" aria-labelledby="" data-prevent="#accordionExample">
                                 <%   @competences[3].competence.comments.each do |comment| %>
                                 <%= f.button comment.description, value: comment.id.to_s, name: 'comment', class: "btn btn-light btn-block text-left m-0 rounded-0" %>
                                 <% end %>
@@ -144,12 +126,10 @@
                         </div>
                         <div class="card">
                             <div class="d-block card-header text-left btn btn-link card-link" data-toggle="collapse"
-                                data-target="#proposta" aria-expanded="true" aria-controls="proposta">
-                                <h5 class="mb-0"><%= @competences[4].competence.description %> -
-                                    <strong><%= -@competences[4].competence.max_penalty + @competences[4].penalty %></strong>
-                                </h5>
+                                data-target="#comp5" aria-expanded="true" aria-controls="comp5">
+                                <h5 class="mb-0"><%= @competences[4].competence.description %></h5>
                             </div>
-                            <div id="proposta" class="collapse" aria-labelledby="" data-prevent="#accordionExample">
+                            <div id="comp5" class="collapse" aria-labelledby="" data-prevent="#accordionExample">
                                 <%   @competences[4].competence.comments.each do |comment| %>
                                 <%= f.button comment.description, value: comment.id.to_s, name: 'comment', class: "btn btn-light btn-block text-left m-0 rounded-0" %>
                                 <% end %>
@@ -171,19 +151,15 @@
                 <div class="table-responsive-md">
                     <table class="table table-bordered table-striped  ">
                         <thead>
-                            <th style="width: 9%;">Linha</th>
-                            <th style="width: 50%;">Recorte do texto</th>
                             <th style="width: 30%;">Comentário</th>
-                            <th style="width: 9%;">Penalidade</th>
+                            <th style="width: 50%;">Comentário estendido</th>
                         </thead>
                         <tbody>
                             <% @correction.correction_comments.order(essay_line: 'asc').each do |cc| %>
                             <tr>
 
-                                <td class="align-middle"><%= cc.essay_line %></td>
-                                <td class="align-middle"><%= cc.text_cut %></td>
                                 <td class="align-middle"><%= cc.comment.description %></td>
-                                <td class="align-middle"><%= cc.penalty %></td>
+                                <td class="align-middle"><%= cc.extended_comment %></td>
                                 <td class="align-middle">
                                     <%= button_to destroy_correction_comment_path(cc.id), method: :delete, class: "btn btn-link" do %>
                                     <span data-toggle="tooltip" data-placement="top" title="Excluir Comentário">

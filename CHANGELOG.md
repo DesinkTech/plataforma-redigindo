@@ -32,9 +32,11 @@
 - 'Classrooms' to contain 'Students';
 - Attach files to 'Themes';
 - Image compression and normalization on 'Essays' uploaded files;
+- 'Extended Comment' field added in 'Correction Comments'
 
 ##### Changed
 
 - Changed '_per_page_' number of 25 to 16;
 - Changed color and border-width of selected input in 'Login' layout; 
+- Removed 'Penalty' and 'Text Cut' fields from 'Correction Comments'
 
