@@ -45,6 +45,11 @@
                                             <%= fa_icon 'pencil-alt' %>
                                         </span>
                                         <% end %>
+                                        <%= link_to destroy_correction_path(correcting.hash_id), class: "btn btn-link", method: :delete do %>
+                                        <span data-toggle="tooltip" data-placement="top" title="Cancelar Correção">
+                                            <%= fa_icon 'times' %>
+                                        </span>
+                                        <% end %>
                                     </td>
                                 </tr>
                                 <% end %>

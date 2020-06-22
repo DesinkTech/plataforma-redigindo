@@ -33,6 +33,7 @@
 - Attach files to 'Themes';
 - Image compression and normalization on 'Essays' uploaded files;
 - 'Extended Comment' field added in 'Correction Comments';
+- 'Correction' canceling;
 
 ##### Changed
 

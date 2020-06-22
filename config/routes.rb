@@ -95,6 +95,7 @@ Rails.application.routes.draw do
   get "corrections/:correction_hash_id/start", to: "corrections#start", as: "start_correction"
   patch "corrections/:correction_hash_id/", to: "corrections#update", as: "update_correction"
   post "corrections/:correction_hash_id/finish", to: "corrections#finish", as: "finish_correction"
+  delete "corrections/:correction_hash_id/destroy", to: "corrections#destroy", as: "destroy_correction"
 
   # Correction Comments routes
   delete "corrections/:id/comment/delete", to: "correction_comments#destroy", as: "destroy_correction_comment"

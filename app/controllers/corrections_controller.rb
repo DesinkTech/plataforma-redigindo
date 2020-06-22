@@ -78,8 +78,6 @@ class CorrectionsController < ApplicationController
   end
 
   def finish
-
-    
     @correction.correction_competences.each_with_index do |cc, i|
       cc.penalty = correction_params[:correction_competences_attributes][i.to_s][:penalty]
       cc.save
@@ -100,19 +98,24 @@ class CorrectionsController < ApplicationController
     @correction.final_comment = correction_params[:final_comment]
 
     if @correction.save && @correction.admin.save && @correction.student.save
-    redirect_to corrections_path, success: "Correção finalizada com sucesso"
+      redirect_to corrections_path, success: "Correção finalizada com sucesso"
     end
   end
 
   def destroy
     @correction.essay.toggle :active
-    @correction.destroy
+
+    if @correction.essay.save && @correction.destroy
+      redirect_to corrections_path, success: "Correção cancelada com sucesso!"
+    else
+      redirect_to corrections_path, error: "Erro ao cancelar Correção!"
+    end
   end
 
   private
 
   def correction_params
-  params.require(:correction).permit(:valid_essay, :extended_comment, :final_comment, correction_competences_attributes: [ :penalty ] )
+    params.require(:correction).permit(:valid_essay, :extended_comment, :final_comment, correction_competences_attributes: [:penalty])
   end
 
   def set_correction
