@@ -3,7 +3,7 @@ class Correction < ApplicationRecord
   before_validation :fill_start_date
 
   belongs_to :student
-  belongs_to :essay, dependent: :destroy
+  belongs_to :essay
   belongs_to :reviewer, optional: true
   belongs_to :admin, optional: true
 
@@ -14,6 +14,7 @@ class Correction < ApplicationRecord
   has_many :competences, through: :correction_competences
 
   accepts_nested_attributes_for :correction_comments
+  accepts_nested_attributes_for :correction_competences
 
   validates :start_date, :final_score, :student, :essay, presence: true
 
