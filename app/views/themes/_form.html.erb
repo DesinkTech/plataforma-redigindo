@@ -13,6 +13,12 @@
     <span class="text-danger"><%= @theme.errors.messages[:support_material].first if @theme.errors.any? %></span>
 </div>
 
+<div class="form-group">
+    <%= f.label :category_id, 'Categoria:' %>
+    <%= f.select 'category_id', @category_options ,{ include_blank: 'Selecione a categoria...'}, class: "custom-select" %>
+    <span class="text-danger"><%= @theme.errors.messages[:category_id].first if @theme.errors.any? %></span>
+</div>
+
 <div class="form-group align-self-center">
     <%= f.button class: "btn btn-primary mr-2" do %>
     <span>Salvar</span>

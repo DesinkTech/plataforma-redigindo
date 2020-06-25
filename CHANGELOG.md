@@ -48,4 +48,5 @@
 - Moved correction's 'Final Score' calculation to the correction finish;
 - Removed 'RG' from 'User';
 - Disable 'Comments';
+- Sort 'Themes' by 'Categories';
 

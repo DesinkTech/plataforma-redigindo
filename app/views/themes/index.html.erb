@@ -1,49 +1,59 @@
 <div class="row">
   <div class="col-md-12">
-    <div class="card mb-3 text-dark shadow-sm">
-      <div class="card-body">
-        <div class="row mb-2">
-          <div class="col-md-6 d-flex">
-            <h5 class="card-title mb-0 align-self-center">Temas</h5>
-          </div>
-          <div class="col-md-6 d-flex justify-content-end">
+    <div class="card mb-3 shadow-sm text-dark">
+      <div class="card-header">
+        <ul id="tabs" class="nav nav-tabs card-header-tabs">
+          <% @categories.each do |category| %>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#<%= category.description %>">
+              <%= category.description %>
+            </a>
+          </li>
+          <% end %>
+          <div class="ml-auto">
             <%= link_to new_theme_path, class: "btn btn-link" do %>
             <span data-toggle="tooltip" data-placement="top" title="Novo Tema">
               <%= fa_icon "plus" %>
             </span>
             <% end %>
           </div>
+        </ul>
+      </div>
+      <div class="card-body tab-content">
+        <% @categories.each do |category| %>
+        <div id="<%= category.description %>" class="tab-pane container fade show" role="tabpanel"
+          aria-labelledby="review-tab">
+          <div class="table-responsive-md">
+            <table class="table table-bordered table-striped  ">
+              <thead>
+                <th style="width: 85%;">Tema</th>
+              </thead>
+              <tbody>
+                <% category.themes.limit(25).each do |theme| %>
+                <tr>
+                  <td class="align-middle"><%= theme.description %></td>
+                  <td class="align-middle">
+                    <%= link_to edit_theme_path(theme), class: "btn btn-link" do %>
+                    <span data-toggle="tooltip" data-placement="top" title="Editar">
+                      <%= fa_icon 'pencil-alt' %>
+                    </span>
+                    <% end %>
+                    <%= link_to rails_blob_path(theme.support_material, disposition: 'preview'), target: "_blank",class: "btn btn-link" do %>
+                    <span data-toggle="tooltip" data-placement="top" title="Ver anexo">
+                      <%= fa_icon 'file-alt' %>
+                    </span>
+                    <% end %>
+                  </td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          
+          <%# will_paginate category.themes, list_classes: %w(pagination justify-content-center),
+                                                  next_label: "&#62;", previous_label: "&#60;"  %>
         </div>
-        <div class="table-responsive-md">
-          <table class="table table-bordered table-striped  ">
-            <thead>
-              <th style="width: 85%;">Tema</th>
-            </thead>
-            <tbody>
-              <% @themes.each do |theme| %>
-              <tr>
-                <td class="align-middle"><%= theme.description %></td>
-                <td class="align-middle">
-                  <%= link_to edit_theme_path(theme), class: "btn btn-link" do %>
-                  <span data-toggle="tooltip" data-placement="top" title="Editar">
-                    <%= fa_icon 'pencil-alt' %>
-                  </span>
-                  <% end %>
-                  <%= link_to rails_blob_path(theme.support_material, disposition: 'preview'), target: "_blank",class: "btn btn-link" do %>
-                  <span data-toggle="tooltip" data-placement="top" title="Ver anexo">
-                    <%= fa_icon 'file-alt' %>
-                  </span>
-                  <% end %>
-                </td>
-              </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-
-        <%= will_paginate @themes, list_classes: %w(pagination justify-content-center),
-                                        next_label: "&#62;", previous_label: "&#60;"  %>
+        <% end %>
       </div>
     </div>
   </div>
-</div>
