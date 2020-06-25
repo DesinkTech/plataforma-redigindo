@@ -44,4 +44,5 @@
 - Changed color and border-width of selected input in 'Login' layout; 
 - Removed 'Essay Line', 'Penalty' and 'Text Cut' fields from 'Correction Comments';
 - Moved correction's 'Final Score' calculation to the correction finish;
+- Removed 'RG' from 'User';
 

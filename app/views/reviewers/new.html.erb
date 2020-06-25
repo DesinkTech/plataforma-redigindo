@@ -36,12 +36,6 @@
     <span><%= @reviewer.user.errors.messages[:cpf].first if @reviewer.errors.any? %></span>
 </div>
 <div>
-    <%= user_field.label :rg, 'RG' %>
-    <%= user_field.text_field :rg %>
-    <span><%= @reviewer.user.errors.messages[:rg].first if @reviewer.errors.any? %></span>
-</div>
-
-<div>
     <%= user_field.label :address_id, 'City' %>
     <%= user_field.select 'address_id', @address_options ,{ include_blank: 'Selecione a cidade...'} %>
     <span><%= @reviewer.user.errors.messages[:address].first if @reviewer.errors.any? %></span>

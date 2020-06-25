@@ -22,13 +22,12 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :reviewer
   accepts_nested_attributes_for :admin
 
-  validates :email, :username, :name, :birth_date, :cpf, :rg, :role, :address, presence: true
+  validates :email, :username, :name, :birth_date, :cpf, :role, :address, presence: true
   validates :email, :cpf, uniqueness: { case_sensitive: false }
   validates :email, format: { with: VALID_EMAIL_REGEX }
   validates :username, length: { minimum: 5, maximum: 16 }
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   validate :cpf_format
-  validates :rg, length: { minimum: 9, maximum: 9 }
 
   def remember
     self.remember_token = User.new_token

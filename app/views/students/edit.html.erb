@@ -74,12 +74,6 @@
                                 class="text-danger"><%= @student.user.errors.messages[:cpf].first if @student.errors.any? %></span>
                         </div>
                         <div class="form-group">
-                            <%= user_field.label :rg, 'RG:' %>
-                            <%= user_field.text_field :rg, class: "form-control", placeholder: "RG", autocomplete: "off" %>
-                            <span
-                                class="text-danger"><%= @student.user.errors.messages[:rg].first if @student.errors.any? %></span>
-                        </div>
-                        <div class="form-group">
                             <%= user_field.label :address_id, 'Cidade:' %>
                             <%= user_field.select 'address_id', @address_options ,{ include_blank: 'Selecione a cidade...'},
                             class: "form-control custom-select" %>

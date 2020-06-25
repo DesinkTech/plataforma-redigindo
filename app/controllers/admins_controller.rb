@@ -43,7 +43,7 @@ class AdminsController < ApplicationController
   end
 
   def admin_params
-    params.require(:admin).permit(user_attributes: [:id, :email, :username, :password, :password_confirmation, :name, :birth_date, :cpf, :rg, :address_id])
+    params.require(:admin).permit(user_attributes: [:id, :email, :username, :password, :password_confirmation, :name, :birth_date, :cpf, :address_id])
   end
 
   def address_options

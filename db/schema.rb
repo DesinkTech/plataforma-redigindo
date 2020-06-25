@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_24_232450) do
+ActiveRecord::Schema.define(version: 2020_06_25_154609) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -192,7 +192,6 @@ ActiveRecord::Schema.define(version: 2020_06_24_232450) do
     t.string "name", null: false
     t.date "birth_date", null: false
     t.string "cpf", limit: 11, null: false
-    t.string "rg", limit: 9, null: false
     t.string "remember_digest"
     t.string "verification_digest"
     t.boolean "verified", default: false
