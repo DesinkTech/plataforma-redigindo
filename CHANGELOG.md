@@ -27,6 +27,7 @@
 
 - Modal showing only one file in 'Essays' index;
 - Not firing 'CorrectionComments' exclusion after 'Correction' exclusion;
+- Missing 'Turma' info in 'Student' visualization;
 
 ##### Added
 
