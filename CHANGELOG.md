@@ -52,3 +52,7 @@
 - Disable 'Comments';
 - Sort 'Themes' by 'Categories';
 
+#### v0.2.1 - 25/06/2020:
+##### Fixed
+
+- Order of migration;
