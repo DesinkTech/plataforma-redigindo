@@ -36,8 +36,9 @@
 - Image compression and normalization on 'Essays' uploaded files;
 - 'Extended Comment' field added in 'Correction Comments';
 - 'Correction' canceling;
-- Image Zoom in/out and rotation in 'Corrections'
-- Image annotation in 'Corrections'
+- Image Zoom in/out and rotation in 'Corrections';
+- Image annotation in 'Corrections;'
+- Instructions to send an essay;
 
 ##### Changed
 
