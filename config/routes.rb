@@ -67,10 +67,10 @@ Rails.application.routes.draw do
   resources :themes, path: "admin/themes"
 
   # Competences routes
-  resources :competences, path: "admin/categories/:category/competences/", except: [:index, :destroy]
+  resources :competences, path: "admin/categories/:category/competences/", except: [:index, :show,:destroy]
 
   # Comments routes
-  resources :comments, path: "admin/categories/:category/competence/:competence/comments", except: [:index, :show, :destroy]
+  # resources :comments, path: "admin/categories/:category/competence/:competence/comments", except: [:index, :show, :destroy]
 
   # Classrooms routes
   resources :classrooms, path: "admin/classrooms", except: [:destroy]
