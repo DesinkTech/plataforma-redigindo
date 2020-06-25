@@ -74,6 +74,8 @@ Rails.application.routes.draw do
 
   # Classrooms routes
   resources :classrooms, path: "admin/classrooms", except: [:destroy]
+  post :classrooms, path: "admin/classroom/:id/upload", to: "classrooms#new_file", as: "file_upload_classroom"
+  delete :classrooms, path: "admin/classroom/:id/purge/:file_id", to: "classrooms#purge_file", as: "file_purge_classroom"
 
   # Submissions (Essays + Corrections) routes
   get "submissions", to: "submissions#index", as: "submissions"

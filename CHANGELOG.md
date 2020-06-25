@@ -39,6 +39,7 @@
 - Image Zoom in/out and rotation in 'Corrections';
 - Image annotation in 'Corrections;'
 - Instructions to send an essay;
+- Attach files to 'Classrooms';
 
 ##### Changed
 

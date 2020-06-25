@@ -11,7 +11,7 @@ class ClassroomsController < ApplicationController
     @students = Student.includes(:category, :school, :classroom, user: :address).paginate(page: params[:page], per_page: 16)
       .where(users: { verified: true })
       .where(classroom_id: @classroom.id)
-      .order(registration_number: 'asc')
+      .order(registration_number: "asc")
   end
 
   def new
@@ -28,6 +28,23 @@ class ClassroomsController < ApplicationController
     end
   end
 
+  def new_file
+    if not classroom_params[:files].nil?
+      if @classroom.files.attach(classroom_params[:files])
+        redirect_to classroom_path(@classroom), success: "Arquivo anexado com sucesso!"
+      end
+    else
+      redirect_to classroom_path(@classroom), error: "Não há arquivo anexado ou contém formato inválido!"
+    end
+  end
+
+  def purge_file
+    @file = @classroom.files.find_by(id: params[:file_id])
+
+    @file.purge
+    redirect_to classroom_path(@classroom), success: "Arquivo excluído com sucesso!"
+  end
+
   def edit
   end
 
@@ -42,7 +59,7 @@ class ClassroomsController < ApplicationController
   private
 
   def classroom_params
-    params.require(:classroom).permit(:name, :address_id)
+    params.fetch(:classroom, {}).permit(:name, :address_id, :files)
   end
 
   def set_classroom
