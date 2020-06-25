@@ -32,8 +32,16 @@ s1 = School.create!({ name: "Colégio Luz Pequeno Príncipe" })
 s2 = School.create!({ name: "Colégio Nossa Senhora da Conceição" })
 s3 = School.create!({ name: "Instituto Federal de Educação Ciência e Tecnologia - Campus Apodi" })
 
+Classroom.create!({ name: "Felipe Guerra - ENEM", address_id: addr2.id })
+Classroom.create!({ name: "Felipe Guerra - IFRN", address_id: addr2.id })
+Classroom.create!({ name: "Apodi - Vespertina - ENEM", address_id: addr1.id })
+Classroom.create!({ name: "Apodi - Noturna - ENEM", address_id: addr1.id })
+Classroom.create!({ name: "Apodi - IFRN", address_id: addr1.id })
+Classroom.create!({ name: "Mossoró - ENEM", address_id: addr3.id })
+Classroom.create!({ name: "Redigindo Online", address_id: nil })
+
 u1 = User.create!({ email: "thun.der@email.com", username: "Thunder", password: "Chronofox@4dmin", name: "Thun Der",
-                   birth_date: "1996-10-28", cpf: "010.752.594-10", rg: "002345691", role_id: adminRole.id,
+                   birth_date: "1996-10-28", cpf: "010.752.594-10", role_id: adminRole.id,
                    address_id: addr1.id, verified: true, verified_at: DateTime.current })
 
 Admin.create!({ user_id: u1.id })

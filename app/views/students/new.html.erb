@@ -61,14 +61,7 @@
         </div>
         <span class="text-danger"><%= @student.user.errors.messages[:cpf].first if @student.errors.any? %></span>
     </div>
-    <div class="field-div d-flex flex-column">
-        <%= user_field.label :rg, 'RG', class: "input-label text-dark"  %>
-        <div class="input-div border-bottom border-dark d-flex">
-            <%= user_field.text_field :rg, placeholder: "Insira seu RG", class: "border-0 flex-fill align-self-stretch", autocomplete: "off" %>
-        </div>
-        <span class="text-danger"><%= @student.user.errors.messages[:rg].first if @student.errors.any? %></span>
-    </div>
-
+    
     <div class="field-div d-flex flex-column">
         <%= user_field.label :address_id, 'Cidade', class: "input-label text-dark" %>
         <div class="input-div border-bottom border-dark d-flex">
@@ -79,6 +72,16 @@
         <span class="text-danger"><%= @student.user.errors.messages[:address].first if @student.errors.any? %></span>
     </div>
     <% end %>
+
+    <div class="field-div d-flex flex-column">
+        <%= f.label :classroom_id, 'Turma', class: "input-label text-dark"  %>
+        <div class="input-div border-bottom border-dark d-flex">
+            <%= f.select 'classroom_id', @classroom_options ,{ include_blank: 'Selecione sua turma...'},
+            class: "custom-select border-0 flex-fill align-self-stretch",
+            style: "box-shadow: none" %>
+        </div>
+        <span class="text-danger"><%= @student.errors.messages[:classroom].first if @student.errors.any? %></span>
+    </div>
 
     <div class="field-div d-flex flex-column">
         <%= f.label :school_id, 'Escola', class: "input-label text-dark"  %>

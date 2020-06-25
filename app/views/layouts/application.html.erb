@@ -207,6 +207,23 @@
     .inputfile+label:hover {
       color: #035aa6 !important;
     }
+
+    /*
+     * Annotation Rect
+     */
+
+    rect.outer {
+      stroke: none !important;
+    }
+
+    rect.inner {
+      stroke: #ff4301 !important;
+      stroke-width: 2px !important;
+    }
+
+    rect.inner:hover {
+      stroke: #4a3f35 !important;
+    }
   </style>
 </head>
 
@@ -236,9 +253,6 @@
           </a>
           <ul class="submenu collapse list-unstyled">
             <li>
-              <%= link_to "Alunos", students_path, class: "d-block submenu-item text-secondary" %>
-            </li>
-            <li>
               <%= link_to "Categorias", categories_path, class: "d-block submenu-item text-secondary" %>
             </li>
             <li>
@@ -249,6 +263,9 @@
             </li>
             <li>
               <%= link_to "Temas", themes_path, class: "d-block submenu-item text-secondary" %>
+            </li>
+            <li>
+              <%= link_to "Turmas", classrooms_path, class: "d-block submenu-item text-secondary" %>
             </li>
           </ul>
         </li>

@@ -1,10 +1,41 @@
 <div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card justify-content-center shadow-sm mb-4">
-            <h5 class="card-header">Faça download do nosso modelo de redação </h5>
+    <div class="col-md-6 d-flex">
+        <div class="card justify-content-center shadow-sm mb-4 flex-fill">
+            <h5 class="card-header">Instruções para o envio de redações</h5>
             <div class="card-body align-self-center">
-                <%= link_to download_essay_model_path, class: "btn btn-link" do %>
-                <span data-toggle="tooltip" data-placement="bottom" title="Download">
+                <h6 class="text-dark">
+                    - Faça <em>scan</em> da folha enviada,
+                    caso não tenha <em>Scanner</em> em casa, utilize o applicativo <strong>CamScanner</strong> para
+                    <em>smartphone</em>.
+                </h6>
+                <h6 class="text-dark">
+                    - Evite anexar fotos tiradas diretamente das câmeras de <em>smartphones</em>.
+                </h6>
+                <h6 class="text-dark">
+                    - Verifique se o arquivo anexado é correspondente a redação com o tema escolhido.
+                </h6>
+                <h6 class="text-dark">
+                    - Folhas rasuradas, com tema/assinatura/texto não condizentes ou em branco serão <strong>invalidadas</strong>.
+                </h6>
+                
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 d-flex">
+        <div class="card justify-content-center shadow-sm mb-4 flex-fill">
+            <h5 class="card-header">Materiais para download</h5>
+            <div class="card-body d-flex flex-column">
+                <h5>Material de suporte ao tema:</h5>
+                <%= link_to rails_blob_path(@theme.support_material, disposition: "attachment"), class: "btn btn-link align-self-center" do %>
+                <span data-toggle="tooltip" data-placement="bottom" title="Material Suporte">
+                    <%= fa_icon "file-download 3x" %>
+                </span>
+                <% end %>
+
+                <h5>Modelo para redações:</h5>
+                <%= link_to download_essay_model_path, class: "btn btn-link align-self-center" do %>
+                <span data-toggle="tooltip" data-placement="bottom" title="Modelo">
                     <%= fa_icon "file-download 3x" %>
                 </span>
                 <% end %>
@@ -45,26 +76,26 @@
 </div>
 
 <script>
-$(document).ready( function (){
-    $('.inputfile').each( function(){
-        
-        var input = $(this);
-        var label = input.next('label');
-        var labelVal = label.html();
-        
-        input.on('change', function (e) {
-            var fileName = '';
+    $(document).ready(function () {
+        $('.inputfile').each(function () {
 
-            fileName = e.target.value.split('\\').pop();
+            var input = $(this);
+            var label = input.next('label');
+            var labelVal = label.html();
 
-            if(fileName)
-                label.html(fileName);
-            else
-                label.html(labelVal);
+            input.on('change', function (e) {
+                var fileName = '';
+
+                fileName = e.target.value.split('\\').pop();
+
+                if (fileName)
+                    label.html(fileName);
+                else
+                    label.html(labelVal);
+            })
+
+            input.on('focus', function () { input.addClass('has-focus'); })
+            input.on('blur', function () { input.addClass('has-focus'); })
         })
-
-        input.on('focus', function () { input.addClass('has-focus'); })
-        input.on('blur', function () { input.addClass('has-focus'); })
-    })   
-})
+    })
 </script>

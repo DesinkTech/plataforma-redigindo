@@ -52,3 +52,32 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-3 shadow-sm text-dark">
+            <div class="card-body">
+                <h5 class="card-title">Material</h5>
+                <div class="table-responsive-md">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <th>Anexo</th>
+                        </thead>
+                        <tbody>
+                            <% current_user.student.classroom.files.each do |file| %>
+                            <tr>
+                                <td class="align-middle"><%= file.blob.filename %></td>
+                                <td class="align-middle">
+                                    <%= link_to rails_blob_path(file, disposition: "attachment") do %>
+                                    <span data-toggle="tooltip" data-placement="top" title="Download Anexo">
+                                        <%= fa_icon 'file-download' %>
+                                    </span>
+                                    <% end %>
+                                </td>
+                            </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

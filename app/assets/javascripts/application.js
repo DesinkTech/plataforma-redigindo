@@ -16,3 +16,5 @@
 //= require jquery3
 //= require popper
 //= require bootstrap
+//= require openseadragon/openseadragon
+// = require annotorious/openseadragon-annotorious.min

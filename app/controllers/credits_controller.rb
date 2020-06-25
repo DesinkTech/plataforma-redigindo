@@ -9,7 +9,7 @@ class CreditsController < ApplicationController
     @student.refill_credits(student_params[:credits].to_i)
 
     if @student.save
-      redirect_to students_path, success: "Creditos abastecidos com sucesso"
+      redirect_to classroom_path(@student.classroom), success: "Creditos abastecidos com sucesso"
     else
       render :edit
     end

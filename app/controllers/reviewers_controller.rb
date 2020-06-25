@@ -8,7 +8,7 @@ class ReviewersController < ApplicationController
 
 
   def index
-    @reviewers = Reviewer.includes(user: :address).paginate(page: params[:page], per_page: 25)
+    @reviewers = Reviewer.includes(user: :address).paginate(page: params[:page], per_page: 16)
       .joins(:user)
       .where(users: { verified: true })
   end

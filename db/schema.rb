@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_11_141411) do
+ActiveRecord::Schema.define(version: 2020_06_25_154609) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -55,6 +55,14 @@ ActiveRecord::Schema.define(version: 2020_06_11_141411) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "classrooms", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "address_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["address_id"], name: "index_classrooms_on_address_id"
+  end
+
   create_table "comments", force: :cascade do |t|
     t.string "description", null: false
     t.integer "competence_id", null: false
@@ -75,12 +83,12 @@ ActiveRecord::Schema.define(version: 2020_06_11_141411) do
 
   create_table "correction_comments", force: :cascade do |t|
     t.integer "correction_id", null: false
-    t.integer "comment_id", null: false
-    t.string "essay_line", null: false
-    t.integer "penalty", default: 0, null: false
+    t.integer "comment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "text_cut", default: "", null: false
+    t.string "extended_comment"
+    t.string "label_id", null: false
+    t.string "label_coords", null: false
     t.index ["comment_id"], name: "index_correction_comments_on_comment_id"
     t.index ["correction_id"], name: "index_correction_comments_on_correction_id"
   end
@@ -160,7 +168,9 @@ ActiveRecord::Schema.define(version: 2020_06_11_141411) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "classroom_id", null: false
     t.index ["category_id"], name: "index_students_on_category_id"
+    t.index ["classroom_id"], name: "index_students_on_classroom_id"
     t.index ["registration_number"], name: "index_students_on_registration_number", unique: true
     t.index ["school_id"], name: "index_students_on_school_id"
     t.index ["user_id"], name: "index_students_on_user_id"
@@ -169,8 +179,10 @@ ActiveRecord::Schema.define(version: 2020_06_11_141411) do
   create_table "themes", force: :cascade do |t|
     t.string "hash_id", default: "", null: false
     t.string "description"
+    t.integer "category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_themes_on_category_id"
     t.index ["hash_id"], name: "index_themes_on_hash_id", unique: true
   end
 
@@ -182,7 +194,6 @@ ActiveRecord::Schema.define(version: 2020_06_11_141411) do
     t.string "name", null: false
     t.date "birth_date", null: false
     t.string "cpf", limit: 11, null: false
-    t.string "rg", limit: 9, null: false
     t.string "remember_digest"
     t.string "verification_digest"
     t.boolean "verified", default: false
@@ -200,6 +211,7 @@ ActiveRecord::Schema.define(version: 2020_06_11_141411) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "admins", "users"
+  add_foreign_key "classrooms", "addresses"
   add_foreign_key "comments", "competences"
   add_foreign_key "competences", "categories"
   add_foreign_key "correction_comments", "comments"
@@ -215,8 +227,10 @@ ActiveRecord::Schema.define(version: 2020_06_11_141411) do
   add_foreign_key "essays", "themes"
   add_foreign_key "reviewers", "users"
   add_foreign_key "students", "categories", on_delete: :cascade
+  add_foreign_key "students", "classrooms"
   add_foreign_key "students", "schools"
   add_foreign_key "students", "users"
+  add_foreign_key "themes", "categories"
   add_foreign_key "users", "addresses"
   add_foreign_key "users", "roles"
 end

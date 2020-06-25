@@ -1,0 +1,135 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-3 text-dark shadow-sm">
+            <div class="card-body overflow-auto">
+                <div class="d-flex mb-2">
+                    <h5 class="card-title align-self-center">Alunos - <%= @classroom.name %></h5>
+                    <button type="button" class="btn btn-link align-self-center ml-auto" data-toggle="modal"
+                        data-target="#fileUpload">
+                        <span data-toggle="tooltip" data-placement="top" title="Anexar Arquivo">
+                            <%= fa_icon 'file-medical 2x' %>
+                        </span>
+                    </button>
+
+                    <div id="fileUpload" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="essayModal"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Anexar Arquivo</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <%= form_with(model: @classroom, url: file_upload_classroom_path(@classroom), method: 'post', local: true) do |f| %>
+                                    <%= f.label "Arquivo:" %>
+                                    <div class="custom-file mb-3">
+                                        <%= f.file_field :files, accept: 'application/pdf', class: "custom-file-input" %>
+                                        <%= f.label "Escolha o arquivo...", class: "custom-file-label" %>
+                                        <span
+                                            class="text-danger"><%= @classroom.errors.messages[:files].first if @classroom.errors.any? %></span>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="form-group">
+                                        <%= f.submit 'Enviar', class: "btn btn-primary" %>
+                                    </div>
+                                </div>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="table-responsive-md">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <th class="text-center" style="width: 3%">Matrícula</th>
+                            <th style="width: 20%">Username</th>
+                            <th style="width: 25%">Email</th>
+                            <th style="width: 7%">Categoria</th>
+                            <th style="width: 5%">Créditos</th>
+                        </thead>
+                        <tbody>
+                            <% @students.each do |student| %>
+                            <tr>
+                                <td class="align-middle"><%= student.registration_number %></td>
+                                <td class="align-middle"><%= student.user.username %></td>
+                                <td class="align-middle"><%= student.user.email %></td>
+                                <td class="align-middle"><%= student.category.description %></td>
+                                <td class="align-middle"><%= student.credits %></td>
+                                <td class="align-middle">
+                                    <%= link_to student_path(@classroom, student), class: "btn btn-link" do %>
+                                    <span data-toggle="tooltip" data-placement="top" title="Detalhes">
+                                        <%= fa_icon 'eye' %>
+                                    </span>
+                                    <% end %>
+
+                                    <%= link_to edit_credits_path(student), class: "btn btn-link" do %>
+                                    <span data-toggle="tooltip" data-placement="top" title="Adicionar Créditos">
+                                        <%= fa_icon 'donate' %>
+                                    </span>
+                                    <% end %>
+
+                                    <% if student.user.active %>
+                                    <%= link_to deactivate_student_path(@classroom, student), method: 'patch', class: "btn btn-link" do %>
+                                    <span data-toggle="tooltip" data-placement="top" title="Desativar Usuário">
+                                        <%= fa_icon 'lightbulb' %>
+                                    </span>
+                                    <% end %>
+                                    <% else %>
+                                    <%= link_to activate_student_path(@classroom, student), method: 'patch', class: "btn btn-link" do %>
+                                    <span data-toggle="tooltip" data-placement="top" title="Ativar Usuário">
+                                        <%= fa_icon 'lightbulb', type: :regular %>
+                                    </span>
+                                    <% end %>
+                                    <% end %>
+
+                                    <%= link_to destroy_student_path(@classroom, student), method: 'delete', class: "btn btn-link" do %>
+                                    <span data-toggle="tooltip" data-placement="top" title="Remover">
+                                        <%= fa_icon 'trash' %>
+                                    </span>
+                                    <% end %>
+                                </td>
+                            </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
+                </div>
+
+                <%= will_paginate @students, list_classes: %w(pagination justify-content-center),
+                                        next_label: "&#62;", previous_label: "&#60;"  %>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-3 shadow-sm text-dark">
+            <div class="card-body">
+                <h5 class="card-title">Anexos</h5>
+                <div class="table-responsive-md">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <th>Anexo</th>
+                        </thead>
+                        <tbody>
+                            <% @classroom.files.each do |file| %>
+                            <tr>
+                                <td class="align-middle"><%= file.blob.filename %></td>
+                                <td class="align-middle">
+                                    <%= link_to file_purge_classroom_path(@classroom, file), method: 'delete' do %>
+                                        <span data-toggle="tooltip" data-placement="top" title="Remover Anexo">
+                                            <%= fa_icon 'trash' %>
+                                        </span>
+                                    <% end %>
+                                </td>
+                            </tr>
+                            <% end %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

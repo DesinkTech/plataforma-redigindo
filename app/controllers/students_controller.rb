@@ -4,11 +4,11 @@ class StudentsController < ApplicationController
   before_action :require_login, only: [:index, :show, :edit, :update, :activate, :deactivate, :destroy]
   before_action :require_admin, only: [:index, :show, :deactivate, :activate, :destroy]
   before_action :require_student, only: [:edit, :update]
-  before_action :address_options, :school_options, :category_options, only: [:new, :create, :edit, :update]
+  before_action :address_options, :school_options, :classroom_options, :category_options, only: [:new, :create, :edit, :update]
   before_action :set_student, except: [:index, :new, :create]
 
   def index
-    @students = Student.includes(:category, :school, user: :address).paginate(page: params[:page], per_page: 25)
+    @students = Student.includes(:category, :school, user: :address).paginate(page: params[:page], per_page: 16)
       .where(users: { verified: true })
   end
 
@@ -47,7 +47,7 @@ class StudentsController < ApplicationController
     unless @student.user.active?
       @student.user.toggle(:active)
       redirect_to home_path, error: "Erro ao ativar usuário" unless @student.save
-      redirect_to students_path
+      redirect_to classroom_path(@student.classroom)
     end
   end
 
@@ -55,28 +55,24 @@ class StudentsController < ApplicationController
     if @student.user.active?
       @student.user.toggle(:active)
       redirect_to home_path, error: "Erro ao desativar usuário" unless @student.save
-      redirect_to students_path
+      redirect_to classroom_path(@student.classroom)
     end
   end
 
   def destroy
-    puts "===================================="
-    puts @student.attributes
-    puts "===================================="
-
     @student.destroy
-    redirect_to students_path, success: "Aluno removido com sucesso"
+    redirect_to classroom_path(@student.classroom), success: "Aluno removido com sucesso"
   end
 
   private
 
   def set_student
-    @student = current_user.student || Student.find_by(id: params[:id])
+    @student = current_user.student || Student.find_by(id: params[:student_id])
   end
 
   def student_params
-    params.require(:student).permit(:school_id, :category_id, user_attributes: [:id, :email, :username, :password, :password_confirmation,
-                                                                                :name, :birth_date, :cpf, :rg, :address_id])
+    params.require(:student).permit(:classroom_id, :school_id, :category_id, user_attributes: [:id, :email, :username, :password, :password_confirmation,
+                                                                                :name, :birth_date, :cpf, :address_id])
   end
 
   def address_options
@@ -89,5 +85,9 @@ class StudentsController < ApplicationController
 
   def school_options
     @school_options = School.all.pluck(:name, :id)
+  end
+
+  def classroom_options
+    @classroom_options = Classroom.all.pluck(:name, :id)
   end
 end

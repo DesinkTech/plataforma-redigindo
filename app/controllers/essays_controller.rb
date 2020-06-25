@@ -1,4 +1,6 @@
 class EssaysController < ApplicationController
+  require 'mini_magick'
+
   before_action :require_login
   before_action :require_admin, only: [:index]
   before_action :require_student, except: [:index]
@@ -7,7 +9,7 @@ class EssaysController < ApplicationController
   before_action :require_credits, only: [:new, :submit, :create]
 
   def index
-    @essays = Essay.includes(:student, :category, :theme).paginate(page: params[:page], per_page: 25)
+    @essays = Essay.includes(:student, :category, :theme).paginate(page: params[:page], per_page: 16)
     .where(active: true)
     .order(submission_date: 'desc')
   end
@@ -17,6 +19,7 @@ class EssaysController < ApplicationController
 
   def submit
     @essay = Essay.new
+    @theme = Theme.find_by(hash_id: params[:theme_hash_id])
   end
 
   def create
@@ -26,6 +29,14 @@ class EssaysController < ApplicationController
     @essay.theme_id = Theme.find_by(hash_id: params[:theme_hash_id]).id
     @essay.student.submissions += 1
     @essay.student.credits -= 1
+
+    # Image transformation
+    essay_image = MiniMagick::Image.new(essay_params[:file].tempfile.path)
+    essay_image.resize '794x1123'
+    essay_image.colorspace 'Gray'
+    essay_image.contrast
+    essay_image.auto_orient
+    essay_image.strip
 
     if @essay.save && @essay.student.save
       redirect_to submissions_path, success: "Redação enviada com sucesso"

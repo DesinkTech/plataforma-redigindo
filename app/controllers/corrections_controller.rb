@@ -2,36 +2,35 @@ class CorrectionsController < ApplicationController
   layout "correction", only: [:start, :validate]
   before_action :require_login
   before_action :require_admin, except: [:show]
-  before_action :set_correction, only: [:show, :start, :update, :finish]
+  before_action :set_correction, only: [:show, :start, :update, :finish, :destroy]
   before_action :valid_correction?, :set_competences, only: [:start]
   before_action :set_essay, only: [:validate, :create]
 
   def index
     corrections = Correction.includes(:student, :essay, :reviewer, :admin)
-    
 
-    @correcting = corrections.where(end_date: nil).where.not(start_date: nil).order(start_date: 'desc')
+    @correcting = corrections.where(end_date: nil).where.not(start_date: nil).order(start_date: "desc")
     @correcting_count = @correcting.count
     @correcting = @correcting.limit(25)
 
-    @corrected = corrections.where.not(start_date: nil, end_date: nil).order(end_date: 'desc')
+    @corrected = corrections.where.not(start_date: nil, end_date: nil).order(end_date: "desc")
     @corrected_count = @corrected.count
-    @corrected = @corrected.paginate(page: params[:page], per_page: 25)
+    @corrected = @corrected.paginate(page: params[:page], per_page: 16)
   end
 
   def show
   end
-  
+
   def new
     @essays = Essay.includes(:student, :theme, :category).where(active: true)
-    @ifrn = @essays.where(categories: { description: 'IFRN' })
-    @enem = @essays.where(categories: { description: 'ENEM' })
+    @ifrn = @essays.where(categories: { description: "IFRN" })
+    @enem = @essays.where(categories: { description: "ENEM" })
   end
 
   def validate
     @correction = Correction.new
   end
-  
+
   def create
     @correction = Correction.new
     @correction.essay_id = @essay.id
@@ -45,11 +44,11 @@ class CorrectionsController < ApplicationController
       @correction.reviewer_id = current_user.reviewer.id
     end
 
-    if correction_params[:valid_essay] == 'false'
+    if correction_params[:valid_essay] == "false"
       @correction.start_date = @correction.end_date = DateTime.current
       @correction.toggle :valid_essay
       @correction.final_score = 0
-      
+
       if @correction.save && @essay.save
         redirect_to corrections_path, success: "Correção finalizada com sucesso"
       end
@@ -63,32 +62,32 @@ class CorrectionsController < ApplicationController
   end
 
   def update
-    @comment = Comment.find_by(id: params[:comment])
+    # @comment = Comment.find_by(id: params[:comment])
 
+    cc = @correction.correction_comments.create({
+      correction_id: @correction.id,
+      # comment_id: @comment.id,
+      comment_id: 1,
+      extended_comment: correction_params[:extended_comment],
+      label_id: correction_params[:label_id],      
+      label_coords: correction_params[:label_coords]
+    })
 
-    if correction_params[:essay_line].empty?
-      redirect_to start_correction_path(@correction.hash_id), error: "A linha deve ser preenchida"
-    elsif correction_params[:text_cut].empty?
-      redirect_to start_correction_path(@correction.hash_id), error: "O recorte de texto deve ser especificado"
-    else
-      cc = @correction.correction_comments.create({
-        correction_id: @correction.id,
-        comment_id: @comment.id,
-        essay_line: correction_params[:essay_line],
-        text_cut: correction_params[:text_cut],
-        penalty: correction_params[:penalty]
-      })
-        
-      if cc.errors.any?
-        redirect_to start_correction_path(@correction.hash_id), error: cc.errors.full_messages.sample
-      else
-        redirect_to start_correction_path(@correction.hash_id)
-      end
-    end
-
+    # if cc.errors.any?
+      # redirect_to start_correction_path(@correction.hash_id), error: cc.errors.full_messages.sample
+    # else
+      # redirect_to start_correction_path(@correction.hash_id)
+    # end
   end
 
   def finish
+    @correction.correction_competences.each_with_index do |cc, i|
+      cc.penalty = correction_params[:correction_competences_attributes][i.to_s][:penalty]
+      cc.save
+
+      @correction.final_score += cc.penalty
+    end
+
     if current_user.admin?
       @correction.admin_id = current_user.id
       @correction.admin.reviewed += 1
@@ -97,7 +96,6 @@ class CorrectionsController < ApplicationController
       @correction.reviewer.reviewed += 1
     end
 
-    
     @correction.end_date = DateTime.current
     @correction.student.reviewed_submissions += 1
     @correction.final_comment = correction_params[:final_comment]
@@ -107,10 +105,20 @@ class CorrectionsController < ApplicationController
     end
   end
 
+  def destroy
+    @correction.essay.toggle :active
+
+    if @correction.essay.save && @correction.destroy
+      redirect_to corrections_path, success: "Correção cancelada com sucesso!"
+    else
+      redirect_to corrections_path, error: "Erro ao cancelar Correção!"
+    end
+  end
+
   private
 
   def correction_params
-    params.require(:correction).permit(:valid_essay, :essay_line, :text_cut, :final_comment, :penalty)
+    params.require(:correction).permit(:valid_essay, :extended_comment, :label_id, :label_coords, :final_comment, correction_competences_attributes: [:penalty])
   end
 
   def set_correction

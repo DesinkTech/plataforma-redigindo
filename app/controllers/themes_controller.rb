@@ -1,10 +1,11 @@
 class ThemesController < ApplicationController
   before_action :require_login, :require_admin
   before_action :set_theme, only: [:edit, :update, :destroy]
+  before_action :category_options, only: [:new, :create, :edit, :update]
 
 
   def index
-    @themes = Theme.paginate(page: params[:page], per_page: 25)
+    @categories = Category.all
   end
 
   def new
@@ -39,10 +40,14 @@ class ThemesController < ApplicationController
   private 
 
   def theme_params
-    params.require(:theme).permit(:description)
+    params.require(:theme).permit(:description, :support_material, :category_id)
   end
 
   def set_theme
     @theme = Theme.find_by(id: params[:id])
+  end
+
+  def category_options
+    @category_options = Category.all.pluck(:description, :id)
   end
 end

@@ -9,11 +9,11 @@
                 <h6><strong>Nome: </strong> <%= @student.user.name %></h6>
                 <h6><strong>Data de Nascimento: </strong> <%= @student.user.birth_date.strftime("%d/%m/%Y") %></h6>
                 <h6><strong>CPF: </strong> <%= @student.user.cpf %></h6>
-                <h6><strong>RG: </strong> <%= @student.user.rg %></h6>
                 <h6><strong>Cidade: </strong> <%= @student.user.address.city %>-<%= @student.user.address.state %></h6>
                 <h6><strong>Escola: </strong> <%= @student.school.name %></h6>
+                <h6><strong>Turma: </strong> <%= @student.classroom.name %></h6>
                 <h6><strong>Categoria: </strong> <%= @student.category.description %></h6>
-                <%= link_to 'Voltar', students_path, class: "align-self-center btn btn-primary" %>
+                <%= link_to 'Voltar', classroom_path(@student.classroom), class: "align-self-center btn btn-primary" %>
             </div>
         </div>
     </div>
