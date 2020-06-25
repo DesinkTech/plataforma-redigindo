@@ -56,3 +56,8 @@
 ##### Fixed
 
 - Order of migration;
+
+#### v0.2.2 - 25/06/2020:
+##### Fixed
+
+- 'Text_cut' column being removed without exists;
