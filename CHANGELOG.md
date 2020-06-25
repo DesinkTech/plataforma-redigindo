@@ -26,6 +26,7 @@
 ##### Fixed
 
 - Modal showing only one file in 'Essays' index;
+- Not firing 'CorrectionComments' exclusion after 'Correction' exclusion;
 
 ##### Added
 

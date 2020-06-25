@@ -7,7 +7,7 @@ class Correction < ApplicationRecord
   belongs_to :reviewer, optional: true
   belongs_to :admin, optional: true
 
-  has_many :correction_comments
+  has_many :correction_comments, dependent: :destroy
   has_many :comments, through: :correction_comments
 
   has_many :correction_competences, dependent: :destroy
