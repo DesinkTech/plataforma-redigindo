@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_21_134528) do
+ActiveRecord::Schema.define(version: 2020_06_24_232450) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -87,6 +87,8 @@ ActiveRecord::Schema.define(version: 2020_06_21_134528) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "extended_comment"
+    t.string "label_id", null: false
+    t.string "label_coords", null: false
     t.index ["comment_id"], name: "index_correction_comments_on_comment_id"
     t.index ["correction_id"], name: "index_correction_comments_on_correction_id"
   end

@@ -1,14 +1,14 @@
 ## CHANGELOG - Plataforma Redigindo
 
-#### v0.1.1 - 09/06/2020
+#### v0.1.1 - 09/06/2020:
 ##### Fixed
 - 'New Admin' form missing 'username' field;
 
-#### v0.1.2 - 10/06/2020
+#### v0.1.2 - 10/06/2020:
 ##### Fixed
 -  'User ID' instead of 'Admin'/'Reviewer' ID being put in 'Corrections';
 
-#### v0.1.3 - 11/06/2020
+#### v0.1.3 - 11/06/2020:
 ##### Fixed
 - Wrong data being displayed in "Redações corrigidas" at 'Admin/Home' view;
 - Included script to show tooltips at 'Correction's layout;
@@ -22,7 +22,7 @@
 
 - 'Correction' layout;
 
-#### v0.2.1 - 17/06/2020
+#### v0.2.0 - 17/06/2020:
 ##### Fixed
 
 - Modal showing only one file in 'Essays' index;
@@ -34,6 +34,8 @@
 - Image compression and normalization on 'Essays' uploaded files;
 - 'Extended Comment' field added in 'Correction Comments';
 - 'Correction' canceling;
+- Image Zoom in/out and rotation in 'Corrections'
+- Image annotation in 'Corrections'
 
 ##### Changed
 

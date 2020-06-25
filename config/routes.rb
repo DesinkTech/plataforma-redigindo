@@ -98,6 +98,7 @@ Rails.application.routes.draw do
   delete "corrections/:correction_hash_id/destroy", to: "corrections#destroy", as: "destroy_correction"
 
   # Correction Comments routes
+  patch "corrections/:id/comment/update", to: "correction_comments#update", as: "update_correction_comment"
   delete "corrections/:id/comment/delete", to: "correction_comments#destroy", as: "destroy_correction_comment"
 
   # Credits routes

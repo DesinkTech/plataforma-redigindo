@@ -1,11 +1,11 @@
 <div class="row">
-    <div class="col-md-6">
-        <div class="card mb-3 text-dark shadow-sm ">
+    <div class="col-md-7">
+        <div class="card mb-3 text-dark shadow-sm h-100">
             <div class="card-body align-self-center">
-                <h5 class="card-title pl-2">Redação Enviada</h5>
-                <a href="#" data-toggle="modal" data-target="#essayModal">
-                    <%= image_tag @correction.essay.file.variant(resize: '498x694') if @correction.essay.file.attached? %>
-                </a>
+                <h5 class="card-title pl-2">Clique abaixo para acessar os comentários</h5>
+                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#essayModal">
+                    <%= image_tag @correction.essay.file, class:"img-fluid" if @correction.essay.file.attached? %>
+                </button>
             </div>
         </div>
     </div>
@@ -19,21 +19,21 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body align-self-center">
-                    <%= image_tag @correction.essay.file.variant(resize: '1123x1587') if @correction.essay.file.attached? %>
+                <div id="essay_file" class="modal-body" style="min-height: 1123px;">
+                    <%# image_tag @correction.essay.file.variant(resize: '1123x1587') if @correction.essay.file.attached? %>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-md-6 d-flex flex-column">
+    <div class="col-md-5 d-flex flex-column">
         <div class="d-flex">
             <div class="card mb-3 text-dark shadow-sm flex-fill">
                 <div class="card-body">
                     <h5 class="card-title">Correção</h5>
                     <h6><strong>Tema: </strong><%= @correction.essay.theme.description %></h6>
-                    <h6><strong>Data Inicial: </strong><%= @correction.start_date.strftime("%d/%m/%Y") %></h6>
-                    <h6><strong>Data Final: </strong><%= @correction.end_date.strftime("%d/%m/%Y") %></h6>
+                    <h6><strong>Inicio da Correção: </strong><%= @correction.start_date.strftime("%d/%m/%Y") %></h6>
+                    <h6><strong>Fim da Correção: </strong><%= @correction.end_date.strftime("%d/%m/%Y") %></h6>
                     <h6>
                         <strong>Corrigida por:</strong>
                         <%= @correction.admin ? @correction.admin.user.username : @correction.reviewer.user.username %>
@@ -43,16 +43,27 @@
                     <h6><strong>Enviada por: </strong><%= @correction.student.user.username %></h6>
                     <% end %>
 
-                    <h5><strong class="text-primary">Pontuação Final: </strong><%= @correction.final_score %></h5>
+                    <h5><strong class="text-secondary">Pontuação Final: </strong><%= @correction.final_score %> pts.</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex">
+            <div class="card mb-3 text-dark shadow-sm flex-fill">
+                <div class="card-body">
+                    <h5 class="card-title">Pontuação por Competência</h5>
+                    <% @correction.correction_competences.each do |cc| %>
+                    <h6><strong class="text-primary"><%= cc.competence.description %>: </strong><%= 200 + cc.penalty %> pts.</h6>
+                    <% end %>
                 </div>
             </div>
         </div>
 
         <div class="d-flex flex-fill">
-            <div class="card mb-3 text-dark shadow-sm flex-fill">
+            <div class="card mb-3 text-dark shadow-sm flex-fill h-100">
                 <div class="card-body">
                     <h5 class="card-title">Comentário Final</h5>
-                    <textarea class="form-control" rows="17" style="resize: none;"
+                    <textarea class="form-control" rows="8" style="resize: none;"
                         readonly><%= @correction.final_comment %></textarea>
                 </div>
             </div>
@@ -60,7 +71,7 @@
     </div>
 </div>
 </div>
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-12">
         <div class="card mb-3 text-dark shadow-sm">
             <div class="card-body">
@@ -76,18 +87,72 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% @correction.correction_comments.each do |cc| %>
+                        <%# @correction.correction_comments.each do |cc| %>
                         <tr>
-                            <td><%= cc.essay_line %></td>
-                            <td><%= cc.text_cut %></td>
-                            <td><%= cc.comment.description %></td>
-                            <td><%= cc.comment.competence.description %></td>
-                            <td><%= cc.penalty %></td>
+                            <td><%# cc.text_cut %></td>
+                            <td><%# cc.comment.description %></td>
+                            <td><%# cc.comment.competence.description %></td>
+                            <td><%# cc.penalty %></td>
                         </tr>
-                        <% end %>
+                        <%# end %>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-</div>
+</div> -->
+
+
+<script>
+    (function ($, window, document, undefined) {
+        $(document).ready(function () {
+            // $('[data-toggle="popover"]').popover()
+
+            let viewer = OpenSeadragon({
+                id: 'essay_file',
+                showZoomControl: false,
+                showHomeControl: false,
+                showFullPageControl: false,
+                showRotationControl: false,
+                gestureSettingsMouse: {
+                    scrollToZoom: false,
+                    clickToZoom: false,
+                    dblClickToZoom: false
+                },
+                gestureSettingsTouch: {
+                    scrollToZoom: false,
+                    clickToZoom: false,
+                    dblClickToZoom: false,
+                    pinchToZoom: false
+                },
+                tileSources: {
+                    type: "image",
+                    url: '<%= rails_blob_path(@correction.essay.file, disposition: "preview") %>'
+                }
+            })
+
+            var anno = OpenSeadragon.Annotorious(viewer, {
+                readOnly: true
+            });
+
+            "<%= @correction.correction_comments.each do |cc| %>"
+            anno.addAnnotation({
+                "@context": "http://www.w3.org/ns/anno.jsonld",
+                "id": "<%= cc.label_id %>",
+                "type": "Annotation",
+                "body": [{
+                    "type": "TextualBody",
+                    "value": "<%= cc.extended_comment %>",
+                }],
+                "target": {
+                    "selector": {
+                        "type": "FragmentSelector",
+                        "conformsTo": "http://www.w3.org/TR/media-frags/",
+                        "value": "<%= cc.label_coords %>"
+                    }
+                }
+            })
+            "<% end %>"
+        })
+    })(jQuery, window, document);
+</script>

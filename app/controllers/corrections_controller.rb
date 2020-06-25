@@ -62,19 +62,22 @@ class CorrectionsController < ApplicationController
   end
 
   def update
-    @comment = Comment.find_by(id: params[:comment])
+    # @comment = Comment.find_by(id: params[:comment])
 
     cc = @correction.correction_comments.create({
       correction_id: @correction.id,
-      comment_id: @comment.id,
+      # comment_id: @comment.id,
+      comment_id: 1,
       extended_comment: correction_params[:extended_comment],
+      label_id: correction_params[:label_id],      
+      label_coords: correction_params[:label_coords]
     })
 
-    if cc.errors.any?
-      redirect_to start_correction_path(@correction.hash_id), error: cc.errors.full_messages.sample
-    else
-      redirect_to start_correction_path(@correction.hash_id)
-    end
+    # if cc.errors.any?
+      # redirect_to start_correction_path(@correction.hash_id), error: cc.errors.full_messages.sample
+    # else
+      # redirect_to start_correction_path(@correction.hash_id)
+    # end
   end
 
   def finish
@@ -115,7 +118,7 @@ class CorrectionsController < ApplicationController
   private
 
   def correction_params
-    params.require(:correction).permit(:valid_essay, :extended_comment, :final_comment, correction_competences_attributes: [:penalty])
+    params.require(:correction).permit(:valid_essay, :extended_comment, :label_id, :label_coords, :final_comment, correction_competences_attributes: [:penalty])
   end
 
   def set_correction

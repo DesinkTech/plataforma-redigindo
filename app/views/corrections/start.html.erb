@@ -1,33 +1,26 @@
 <div class="d-flex">
-    <div class="col-md-6 d-flex">
-        <div class="card mb-3 text-dark shadow-sm flex-fill">
-            <div class="card-body">
-                <a href="#" data-toggle="modal" data-target="#essayModal">
-                    <%= image_tag @correction.essay.file, class: "img-fluid" if @correction.essay.file.attached?%>
-                </a>
+    <div class="col-md-12 d-flex flex-column">
+        <div class="d-flex">
+            <div class="card mb-3 text-dark shadow-sm flex-fill">
+                <div class="card-body">
+                    <h5 class="card-title">Redação</h5>
+                    <h6><strong>Tema: </strong><%= @correction.essay.theme.description %></h6>
+                    <h6><strong>Enviada por: </strong><%= @correction.student.user.username %></h6>
+                    <h5><strong class="text-primary">Nota: </strong><%= @correction.final_score %></h5>
+                    <a class="btn btn-secondary btn-block text-white" data-toggle="modal"
+                        data-target="#finishModal">Finalizar
+                        Correção</a>
+                    <%= link_to  "Sair e Salvar Correção", corrections_path, class: "btn btn-secondary btn-block" %>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div id="essayModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="essayModal" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Redação enviada</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body align-self-center">
-                    <%= image_tag @correction.essay.file.variant(resize: '1123x1587') if @correction.essay.file.attached? %>
-                </div>
-            </div>
-        </div>
+
     </div>
 
     <div id="finishModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="finishModal"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Finalizar Correção</h4>
@@ -62,97 +55,87 @@
         </div>
     </div>
 
-    <div class="col-md-6 d-flex flex-column">
-        <div class="d-flex">
-            <div class="card mb-3 text-dark shadow-sm flex-fill">
-                <div class="card-body">
-                    <h5 class="card-title">Redação</h5>
-                    <h6><strong>Tema: </strong><%= @correction.essay.theme.description %></h6>
-                    <h6><strong>Enviada por: </strong><%= @correction.student.user.username %></h6>
-                    <h5><strong class="text-primary">Nota: </strong><%= @correction.final_score %></h5>
-                    <a class="btn btn-primary btn-block text-white" data-toggle="modal"
-                        data-target="#finishModal">Finalizar Correção</a>
-                    <%= link_to  "Sair e Salvar Correção", corrections_path, class: "btn btn-primary btn-block" %>
+
+</div>
+
+<div class="d-flex">
+    <div class="col-md-12 d-flex">
+        <div class="card mb-3 text-dark shadow-sm flex-fill">
+            <div class="card-header d-flex justify-content-center">
+                <div id="divToolbar">
+                    <button id="btnZoomin" type="button" class="btn btn-link">
+                        <%= fa_icon "search-plus 3x" %>
+                    </button>
+                    <button id="btnZoomout" type="button" class="btn btn-link">
+                        <%= fa_icon "search-minus 3x" %>
+                    </button>
+                    <button id="btnHome" type="button" class="btn btn-link">
+                        <%= fa_icon "home 3x" %>
+                    </button>
+                    <button id="btnFullscreen" type="button" class="btn btn-link">
+                        <%= fa_icon "expand-arrows-alt 3x" %>
+                    </button>
+                    <button id="btnRotate" type="button" class="btn btn-link">
+                        <%= fa_icon "sync-alt 3x" %>
+                    </button>
+                    <button id="btnRotateLeft" type="button" class="btn btn-link d-none">
+                        <%= fa_icon "sync-alt 3x" %>
+                    </button>
                 </div>
             </div>
-        </div>
-
-        <div class="d-flex flex-fill">
-            <div class="card mb-3 text-dark shadow-sm flex-fill">
-                <div class="card-body">
-                    <h5 class="card-title">Adicionar Comentários</h5>
-                    <%= form_with(model: @correction, url: update_correction_path(@correction.hash_id), local: true) do |f| %>
-
-                    <div class="form-group">
-                        <%= f.label :extended_comment, "Comentário estendido:" %>
-                        <%= f.text_field :extended_comment, class: "form-control", autocomplete: "off" %>
-                    </div>
-
-                    <div class="accordion" id="accordionExample">
-                        <div class="card">
-                            <div class="d-block card-header text-left btn btn-link card-link" data-toggle="collapse"
-                                data-target="#comp1" aria-expanded="true" aria-controls="comp1">
-                                <h5 class="mb-0"><%= @competences[0].competence.description %></h5>
-                            </div>
-                            <div id="comp1" class="collapse" aria-labelledby="" data-prevent="#accordionExample">
-                                <%   @competences[0].competence.comments.each do |comment| %>
-                                <%= f.button comment.description, value: comment.id.to_s, name: 'comment', class: "btn btn-light btn-block text-left m-0 rounded-0" %>
-                                <% end %>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="d-block card-header text-left btn btn-link card-link" data-toggle="collapse"
-                                data-target="#comp2" aria-expanded="true" aria-controls="comp2">
-                                <h5 class="mb-0"><%= @competences[1].competence.description %></h5>
-                            </div>
-                            <div id="comp2" class="collapse" aria-labelledby="" data-prevent="#accordionExample">
-                                <%   @competences[1].competence.comments.each do |comment| %>
-                                <%= f.button comment.description, value: comment.id.to_s, name: 'comment', class: "btn btn-light btn-block text-left m-0 rounded-0" %>
-                                <% end %>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="d-block card-header text-left btn btn-link card-link" data-toggle="collapse"
-                                data-target="#comp3" aria-expanded="true" aria-controls="comp3">
-                                <h5 class="mb-0"><%= @competences[2].competence.description %></h5>
-                            </div>
-                            <div id="comp3" class="collapse" aria-labelledby="" data-prevent="#accordionExample">
-                                <%   @competences[2].competence.comments.each do |comment| %>
-                                <%= f.button comment.description, value: comment.id.to_s, name: 'comment', class: "btn btn-light btn-block text-left m-0 rounded-0" %>
-                                <% end %>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="d-block card-header text-left btn btn-link card-link" data-toggle="collapse"
-                                data-target="#comp4" aria-expanded="true" aria-controls="comp4">
-                                <h5 class="mb-0"><%= @competences[3].competence.description %></h5>
-                            </div>
-                            <div id="comp4" class="collapse" aria-labelledby="" data-prevent="#accordionExample">
-                                <%   @competences[3].competence.comments.each do |comment| %>
-                                <%= f.button comment.description, value: comment.id.to_s, name: 'comment', class: "btn btn-light btn-block text-left m-0 rounded-0" %>
-                                <% end %>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="d-block card-header text-left btn btn-link card-link" data-toggle="collapse"
-                                data-target="#comp5" aria-expanded="true" aria-controls="comp5">
-                                <h5 class="mb-0"><%= @competences[4].competence.description %></h5>
-                            </div>
-                            <div id="comp5" class="collapse" aria-labelledby="" data-prevent="#accordionExample">
-                                <%   @competences[4].competence.comments.each do |comment| %>
-                                <%= f.button comment.description, value: comment.id.to_s, name: 'comment', class: "btn btn-light btn-block text-left m-0 rounded-0" %>
-                                <% end %>
-                            </div>
-                        </div>
-                    </div>
-                    <% end %>
-
-                </div>
-            </div>
+            <div id="openseadragon" class="card-body" style="min-height: 1123px;"></div>
         </div>
     </div>
+
+    <!-- <div id="commentModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="commentModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Inserir Comentário</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <%# form_with(model: @correction, url: update_correction_path(@correction.hash_id), local: true) do |f| %>
+                <div class="modal-body" style='overflow-y: scroll !important;'>
+                    <div class="form-group">
+                        <%# f.label :extended_comment, "Comentário estendido:" %>
+                        <%# f.text_field :extended_comment, class: "form-control", autocomplete: "off" %>
+                    </div>
+
+                    <div class="d-flex flex-column" data-toggle="buttons">
+                        <%# @competences.each do |competence|%>
+                        <div class="card ">
+                            <div class="d-block card-header text-left">
+                                <h5 class="mb-0"><%# competence.competence.description %></h5>
+                            </div>
+                            <div class=" btn-group btn-group-toggle flex-column">
+                                <%#   competence.competence.comments.each do |comment| %>
+                                <label class="btn btn-light btn-block text-left m-0 rounded-0">
+                                    <%# f.radio_button "comment", comment.id.to_s %><%# comment.description %>
+                                </label>
+                                <%# end %>
+                            </div>
+                        </div>
+                        <%# end %>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <%# f.submit "Inserir", class: "btn btn-secondary" %>
+                    </div>
+                    <%# end %>
+                    <div class="form-group">
+                        <button id="btnExcluir" class="btn btn-primary" type="button">Excluir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
 </div>
-<div class="d-flex">
+
+<!-- <div class="d-flex">
     <div class="col-md-12 d-flex">
         <div class="card mb-3 text-dark shadow-sm flex-fill">
             <div class="card-body">
@@ -184,4 +167,133 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
+
+<script>
+    (function ($, window, document, undefined) {
+        $(document).ready(function () {
+            $('[data-toggle="popover"]').popover()
+
+            let viewer = OpenSeadragon({
+                id: 'openseadragon',
+                minZoomLevel: 0,
+                maxZoomLevel: 4,
+                zoomPerClick: 1.5,
+                animationTime: 0.5,
+                // toolbar: "divToolbar",
+                showRotationControl: true,
+                zoomInButton: "btnZoomin",
+                zoomOutButton: "btnZoomout",
+                homeButton: "btnHome",
+                fullPageButton: "btnFullscreen",
+                rotateRightButton: "btnRotate",
+                rotateLeftButton: "btnRotateLeft",
+                tileSources: {
+                    type: "image",
+                    url: '<%= rails_blob_path(@correction.essay.file, disposition: "preview") %>'
+                }
+            })
+
+            var anno = OpenSeadragon.Annotorious(viewer, {
+
+            });
+
+            let annotations = []
+            "<%= @correction.correction_comments.each do |cc| %>"
+            anno.addAnnotation({
+                "@context": "http://www.w3.org/ns/anno.jsonld",
+                "id": "<%= cc.label_id %>",
+                "type": "Annotation",
+                "body": [{
+                    "type": "TextualBody",
+                    "value": "<%= cc.extended_comment %>",
+                    "cc_id": "<%= cc.id %>"
+                }],
+                "target": {
+                    "selector": {
+                        "type": "FragmentSelector",
+                        "conformsTo": "http://www.w3.org/TR/media-frags/",
+                        "value": "<%= cc.label_coords %>"
+                    }
+                }
+            })
+            "<% end %>"
+
+            // console.log(annotations);
+            // anno.setAnnotations(annotations);
+
+            anno.on('createAnnotation', function (annotation) {
+                let id = annotation.id;
+                let comment = annotation.body[0].value.replace(/(<([^>]+)>)/ig, "");
+                let coords = annotation.target.selector.value;
+
+
+                $.ajax({
+                    type: 'PATCH',
+                    url: "<%= update_correction_path(@correction.hash_id) %>",
+                    data: {
+                        "utf8": "✓",
+                        "authenticity_token": $('meta[name="csrf-token"]').attr('content'),
+                        "correction": {
+                            "extended_comment": comment,
+                            "label_id": id,
+                            "label_coords": coords
+                        }
+                    },
+                    success: function (data) { }
+                })
+            })
+
+            anno.on("updateAnnotation", function (annotation) {
+                let id = annotation.id;
+                let comment = annotation.body[0].value.replace(/(<([^>]+)>)/ig, "");
+                let ccid = annotation.body[0].cc_id;
+                let coords = annotation.target.selector.value;
+                let route = "/corrections/" + ccid + "/comment/update"
+
+
+                $.ajax({
+                    type: 'PATCH',
+                    url: route,
+                    data: {
+                        "utf8": "✓",
+                        "authenticity_token": $('meta[name="csrf-token"]').attr('content'),
+                        "correction_comment": {
+                            "extended_comment": comment,
+                            "label_id": id,
+                            "label_coords": coords
+                        }
+                    },
+                    success: function (data) { }
+                })
+            })
+
+            anno.on("deleteAnnotation", function (annotation) {
+                let ccid = annotation.body[0].cc_id;
+                let route = "/corrections/" + ccid + "/comment/delete"
+
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: route,
+                    data: {
+                        "utf8": "✓",
+                        "authenticity_token": $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    success: function (data) { }
+                })
+            })
+
+            anno.on('mouseEnterAnnotation', function (annotation) {
+                $("[data-id='" + annotation.id + "']").attr('data-toggle', 'popover')
+                $("[data-id='" + annotation.id + "']").attr('data-placement', 'top')
+                $("[data-id='" + annotation.id + "']").attr('data-content', annotation.body[0].value.replace(/(<([^>]+)>)/ig, ""))
+                $("[data-id='" + annotation.id + "']").popover('show');
+            })
+
+            anno.on('mouseLeaveAnnotation', function (annotation) {
+                $("[data-id='" + annotation.id + "']").popover('hide');
+            })
+        })
+    })(jQuery, window, document);
+</script>
