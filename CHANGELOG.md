@@ -28,6 +28,7 @@
 - Modal showing only one file in 'Essays' index;
 - Not firing 'CorrectionComments' exclusion after 'Correction' exclusion;
 - Missing 'Turma' info in 'Student' visualization;
+- Trying to show a _Nil_ file in 'Themes' without attachment;
 
 ##### Added
 

@@ -38,10 +38,12 @@
                       <%= fa_icon 'pencil-alt' %>
                     </span>
                     <% end %>
+                    <% if theme.support_material.attached? %>
                     <%= link_to rails_blob_path(theme.support_material, disposition: 'preview'), target: "_blank",class: "btn btn-link" do %>
                     <span data-toggle="tooltip" data-placement="top" title="Ver anexo">
                       <%= fa_icon 'file-alt' %>
                     </span>
+                    <% end %>
                     <% end %>
                   </td>
                 </tr>
@@ -49,7 +51,7 @@
               </tbody>
             </table>
           </div>
-          
+
           <%# will_paginate category.themes, list_classes: %w(pagination justify-content-center),
                                                   next_label: "&#62;", previous_label: "&#60;"  %>
         </div>
