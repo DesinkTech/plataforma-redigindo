@@ -73,3 +73,12 @@
 ##### Fixed
 
 - 'fill_themes' method being called in all other 'Essay' controller methods;
+
+#### v0.2.5 - 26/06/2020:
+##### Fixed
+
+- 'comment_id' parameter being send to a _Nil_ column in 'CorrectionComment' model;
+
+#### Added
+
+- More instructions to send an essay;

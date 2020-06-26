@@ -67,7 +67,6 @@ class CorrectionsController < ApplicationController
     cc = @correction.correction_comments.create({
       correction_id: @correction.id,
       # comment_id: @comment.id,
-      comment_id: 1,
       extended_comment: correction_params[:extended_comment],
       label_id: correction_params[:label_id],      
       label_coords: correction_params[:label_coords]
