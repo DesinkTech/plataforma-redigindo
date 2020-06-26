@@ -69,3 +69,7 @@
 - Trying to show a _Nil_ file in 'Essay' submission without attachment;
 - All 'Themes' showing to the 'Student' in essay submission;
  
+#### v0.2.4 - 26/06/2020:
+##### Fixed
+
+- 'fill_themes' method being called in all other 'Essay' controller methods;

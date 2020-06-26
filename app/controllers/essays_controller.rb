@@ -5,7 +5,7 @@ class EssaysController < ApplicationController
   before_action :require_admin, only: [:index]
   before_action :require_student, except: [:index]
   before_action :set_essay, only: [:destroy]
-  before_action :fill_themes
+  before_action :fill_themes, only: [:new]
   before_action :require_credits, only: [:new, :submit, :create]
 
   def index
