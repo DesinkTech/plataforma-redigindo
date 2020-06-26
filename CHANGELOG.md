@@ -61,3 +61,11 @@
 ##### Fixed
 
 - 'Text_cut' column being removed without exists;
+
+#### v0.2.3 - 26/06/2020:
+##### Fixed
+
+- Inexistent column 'essay_line' in 'Correction' start;
+- Trying to show a _Nil_ file in 'Essay' submission without attachment;
+- All 'Themes' showing to the 'Student' in essay submission;
+ 
