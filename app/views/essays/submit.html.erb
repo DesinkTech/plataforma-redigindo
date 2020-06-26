@@ -15,10 +15,11 @@
                     - Verifique se o arquivo anexado é correspondente a redação com o tema escolhido.
                 </h6>
                 <h6 class="text-dark">
-                    - Folhas rasuradas, com tema/assinatura/texto não condizentes ou em branco serão <strong>invalidadas</strong>.
+                    - Folhas rasuradas, com tema/assinatura/texto não condizentes ou em branco serão
+                    <strong>invalidadas</strong>.
                 </h6>
-                
-                
+
+
             </div>
         </div>
     </div>
@@ -26,12 +27,15 @@
         <div class="card justify-content-center shadow-sm mb-4 flex-fill">
             <h5 class="card-header">Materiais para download</h5>
             <div class="card-body d-flex flex-column">
+                <% if @theme.support_material.attached? %>
                 <h5>Material de suporte ao tema:</h5>
                 <%= link_to rails_blob_path(@theme.support_material, disposition: "attachment"), class: "btn btn-link align-self-center" do %>
                 <span data-toggle="tooltip" data-placement="bottom" title="Material Suporte">
                     <%= fa_icon "file-download 3x" %>
                 </span>
                 <% end %>
+                <% end %>
+
 
                 <h5>Modelo para redações:</h5>
                 <%= link_to download_essay_model_path, class: "btn btn-link align-self-center" do %>

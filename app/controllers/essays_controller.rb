@@ -73,6 +73,6 @@ class EssaysController < ApplicationController
   end
 
   def fill_themes
-    @themes = Theme.paginate(page: params[:page], per_page: 9)
+    @themes = Theme.where(category_id: current_user.student.category_id).paginate(page: params[:page], per_page: 9)
   end
 end

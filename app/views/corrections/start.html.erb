@@ -147,20 +147,20 @@
                             <th style="width: 50%;">Comentário estendido</th>
                         </thead>
                         <tbody>
-                            <% @correction.correction_comments.order(essay_line: 'asc').each do |cc| %>
+                            <%# @correction.correction_comments.order(essay_line: 'asc').each do |cc| %>
                             <tr>
 
-                                <td class="align-middle"><%= cc.comment.description %></td>
-                                <td class="align-middle"><%= cc.extended_comment %></td>
+                                <td class="align-middle"><%# cc.comment.description %></td>
+                                <td class="align-middle"><%# cc.extended_comment %></td>
                                 <td class="align-middle">
-                                    <%= button_to destroy_correction_comment_path(cc.id), method: :delete, class: "btn btn-link" do %>
+                                    <%# button_to destroy_correction_comment_path(cc.id), method: :delete, class: "btn btn-link" do %>
                                     <span data-toggle="tooltip" data-placement="top" title="Excluir Comentário">
-                                        <%= fa_icon 'trash' %>
-                                        <% end %>
+                                        <%# fa_icon 'trash' %>
+                                        <%# end %>
                                     </span>
                                 </td>
                             </tr>
-                            <% end %>
+                            <%# end %>
                         </tbody>
                     </table>
                 </div>
