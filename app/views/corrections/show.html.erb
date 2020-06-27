@@ -133,6 +133,12 @@
                 readOnly: true
             });
 
+            let decodedText = function (html) {
+                let text = document.createElement("textarea");
+                text.innerHTML = html;
+                return text.value
+            }
+
             "<%= @correction.correction_comments.each do |cc| %>"
             anno.addAnnotation({
                 "@context": "http://www.w3.org/ns/anno.jsonld",
@@ -140,7 +146,7 @@
                 "type": "Annotation",
                 "body": [{
                     "type": "TextualBody",
-                    "value": "<%= cc.extended_comment %>",
+                    "value": decodedText,
                 }],
                 "target": {
                     "selector": {
