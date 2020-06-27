@@ -98,3 +98,4 @@
 ##### Fixed
 
 - HTML entities being displayed as plain-text;
+- 'Theme' card in not displaying CSS correctly in 'Essay' submission;"
