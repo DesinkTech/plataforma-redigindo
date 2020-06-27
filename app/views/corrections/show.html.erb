@@ -139,14 +139,16 @@
                 return text.value
             }
 
+            
             "<%= @correction.correction_comments.each do |cc| %>"
+            console.log(decodedText('<%= cc.extended_comment %>'))
             anno.addAnnotation({
                 "@context": "http://www.w3.org/ns/anno.jsonld",
                 "id": "<%= cc.label_id %>",
                 "type": "Annotation",
                 "body": [{
                     "type": "TextualBody",
-                    "value": decodedText,
+                    "value": decodedText("<%= cc.extended_comment %>"),
                 }],
                 "target": {
                     "selector": {
