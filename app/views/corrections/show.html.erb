@@ -19,9 +19,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div id="essay_file" style="width: 100%; height: 1123px;"></div>
-                </div>
+                <div id="essay_file" class="modal-body" style="width: 100%; height: 1123px;"></div>
             </div>
         </div>
     </div>
@@ -43,7 +41,8 @@
                     <h6><strong>Enviada por: </strong><%= @correction.student.user.username %></h6>
                     <% end %>
 
-                    <h5><strong class="text-secondary">Pontuação Final: </strong><%= @correction.final_score %> pts.</h5>
+                    <h5><strong class="text-secondary">Pontuação Final: </strong><%= @correction.final_score %> pts.
+                    </h5>
                 </div>
             </div>
         </div>
@@ -53,7 +52,8 @@
                 <div class="card-body">
                     <h5 class="card-title">Pontuação por Competência</h5>
                     <% @correction.correction_competences.each do |cc| %>
-                    <h6><strong class="text-primary"><%= cc.competence.description %>: </strong><%= -cc.competence.max_penalty + cc.penalty %> pts.</h6>
+                    <h6><strong class="text-primary"><%= cc.competence.description %>:
+                        </strong><%= -cc.competence.max_penalty + cc.penalty %> pts.</h6>
                     <% end %>
                 </div>
             </div>
