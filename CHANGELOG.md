@@ -93,3 +93,9 @@
 ##### Fixed
 
 - Annotations out of position in "Correction" show;
+
+#### v0.2.8 - 27/06/2020:
+##### Fixed
+
+- HTML entities being displayed as plain-text;
+- 'Theme' card in not displaying CSS correctly in 'Essay' submission;"
