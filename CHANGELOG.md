@@ -87,3 +87,4 @@
 ##### Fixed
 
 - 'Essay' corrected not displaying correctly;
+- Score by 'Competence' not showing the right values;

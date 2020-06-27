@@ -53,7 +53,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Pontuação por Competência</h5>
                     <% @correction.correction_competences.each do |cc| %>
-                    <h6><strong class="text-primary"><%= cc.competence.description %>: </strong><%= 200 + cc.penalty %> pts.</h6>
+                    <h6><strong class="text-primary"><%= cc.competence.description %>: </strong><%= -cc.competence.max_penalty + cc.penalty %> pts.</h6>
                     <% end %>
                 </div>
             </div>
