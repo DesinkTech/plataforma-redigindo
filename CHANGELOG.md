@@ -88,3 +88,8 @@
 
 - 'Essay' corrected not displaying correctly;
 - Score by 'Competence' not showing the right values;
+
+#### v0.2.7 - 27/06/2020:
+##### Fixed
+
+- Annotations out of position in "Correction" show;
