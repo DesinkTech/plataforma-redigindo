@@ -82,3 +82,8 @@
 #### Added
 
 - More instructions to send an essay;
+
+#### v0.2.6 - 27/06/2020:
+##### Fixed
+
+- 'Essay' corrected not displaying correctly;
