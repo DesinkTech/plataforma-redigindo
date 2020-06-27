@@ -98,4 +98,9 @@
 ##### Fixed
 
 - HTML entities being displayed as plain-text;
-- 'Theme' card in not displaying CSS correctly in 'Essay' submission;"
+- 'Theme' card in not displaying CSS correctly in 'Essay' submission;
+
+#### v0.2.9 - 27/06/2020:
+##### Fixed
+
+- Annotation text not being displayed;
