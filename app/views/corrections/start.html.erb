@@ -172,7 +172,9 @@
 <script>
     (function ($, window, document, undefined) {
         $(document).ready(function () {
-            $('[data-toggle="popover"]').popover()
+            $('[data-toggle="popover"]').popover({
+                html: true,
+            })
 
             let viewer = OpenSeadragon({
                 id: 'openseadragon',
@@ -206,7 +208,7 @@
                 "type": "Annotation",
                 "body": [{
                     "type": "TextualBody",
-                    "value": "<%= cc.extended_comment %>",
+                    "value": "<%= cc.extended_comment.strip %>",
                     "cc_id": "<%= cc.id %>"
                 }],
                 "target": {
@@ -223,8 +225,9 @@
             // anno.setAnnotations(annotations);
 
             anno.on('createAnnotation', function (annotation) {
+                annotation.body[0].value = annotation.body[0].value.replace(/(<([^>]+)>)/ig, "").trim()
                 let id = annotation.id;
-                let comment = annotation.body[0].value.replace(/(<([^>]+)>)/ig, "");
+                let comment = annotation.body[0].value;
                 let coords = annotation.target.selector.value;
 
 
@@ -235,7 +238,7 @@
                         "utf8": "✓",
                         "authenticity_token": $('meta[name="csrf-token"]').attr('content'),
                         "correction": {
-                            "extended_comment": comment,
+                            "extended_comment": comment.replace(/(<([^>]+)>)/ig, "").trim(),
                             "label_id": id,
                             "label_coords": coords
                         }
@@ -246,7 +249,7 @@
 
             anno.on("updateAnnotation", function (annotation) {
                 let id = annotation.id;
-                let comment = annotation.body[0].value.replace(/(<([^>]+)>)/ig, "");
+                let comment = annotation.body[0].value;
                 let ccid = annotation.body[0].cc_id;
                 let coords = annotation.target.selector.value;
                 let route = "/corrections/" + ccid + "/comment/update"
@@ -259,7 +262,7 @@
                         "utf8": "✓",
                         "authenticity_token": $('meta[name="csrf-token"]').attr('content'),
                         "correction_comment": {
-                            "extended_comment": comment,
+                            "extended_comment": comment.replace(/(<([^>]+)>)/ig, "").trim(),
                             "label_id": id,
                             "label_coords": coords
                         }
@@ -284,10 +287,16 @@
                 })
             })
 
+            function decodeHTMLEntities(text) {
+                return $("<textarea/>")
+                    .html(text)
+                    .text();
+            }
+
             anno.on('mouseEnterAnnotation', function (annotation) {
                 $("[data-id='" + annotation.id + "']").attr('data-toggle', 'popover')
                 $("[data-id='" + annotation.id + "']").attr('data-placement', 'top')
-                $("[data-id='" + annotation.id + "']").attr('data-content', annotation.body[0].value.replace(/(<([^>]+)>)/ig, ""))
+                $("[data-id='" + annotation.id + "']").popover({ content: decodeHTMLEntities(annotation.body[0].value) });
                 $("[data-id='" + annotation.id + "']").popover('show');
             })
 

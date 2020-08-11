@@ -133,22 +133,21 @@
                 readOnly: true
             });
 
-            let decodedText = function (html) {
-                let text = document.createElement("textarea");
-                text.innerHTML = html;
-                return text.value
+            function decodeHTMLEntities(text) {
+                return $("<textarea/>")
+                    .html(text)
+                    .text();
             }
 
             
             "<%= @correction.correction_comments.each do |cc| %>"
-            console.log(decodedText('<%= cc.extended_comment %>'))
             anno.addAnnotation({
                 "@context": "http://www.w3.org/ns/anno.jsonld",
                 "id": "<%= cc.label_id %>",
                 "type": "Annotation",
                 "body": [{
                     "type": "TextualBody",
-                    "value": decodedText("<%= cc.extended_comment %>"),
+                    "value": decodeHTMLEntities("<%= cc.extended_comment.strip %>"),
                 }],
                 "target": {
                     "selector": {

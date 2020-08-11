@@ -104,3 +104,8 @@
 ##### Fixed
 
 - Annotation text not being displayed;
+
+#### v0.2.10 - 11/08/2020:
+##### Fixed
+
+- 'CorrectionComment' annotation text not being displayed correctly;
